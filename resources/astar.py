@@ -21,7 +21,7 @@ def heuristic(node, goal, D=1, D2=2 ** 0.5):  # Diagonal Distance
     return D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
 
 
-def aStar(maze, start, end):
+def astar(maze, start, end):
     # startNode와 endNode 초기화
     startNode = Node(None, start)
     endNode = Node(None, end)
@@ -116,27 +116,4 @@ def aStar(maze, start, end):
             openList.append(child)
 
 
-def main():
-    # 1은 장애물
-    maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-    start = (0, 0)
-    end = (7, 6)
-
-    path = aStar(maze, start, end)
-    print(len(path)-1)
-    print(path)
-
-
-if __name__ == '__main__':
-    main()
-    # [(0, 0), (1, 1), (2, 2), (3, 3), (4, 3), (5, 4), (6, 5), (7, 6)]
