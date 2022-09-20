@@ -1,13 +1,10 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
-from agent import Agent
-import numpy as np
+from resources.agent import Agent
 from sklearn.neighbors import KNeighborsClassifier
 import math
 import random
-from map import map_data1
-from map import map_data2
-from map import map_data3
+from resources.map import map_data3
 
 
 # 갈 수 있는 frontier_node를 모두 찾아서 저장해서 출력한다.
@@ -24,10 +21,6 @@ def find_frontier_node():
                     j - 1] == 0 or explored_data[i + 1][j + 1] == 0 or explored_data[i - 1][j + 1] == 0:
                     pre_frontier_node.append([i, j])
 
-
-# 분류 된 것 바탕으로 가장 짧은 거리의 node 구하기
-def get_shortest_next_node():
-    return
 
 
 def set_explored_map(position):

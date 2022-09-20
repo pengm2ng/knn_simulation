@@ -1,13 +1,10 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
-from agent import Agent
-import numpy as np
+from resources.agent import Agent
 from sklearn.neighbors import KNeighborsClassifier
 import math
 import random
-from map import map_data1
-from map import map_data2
-from map import map_data3
+from resources.map import map_data3
 
 
 # 갈 수 있는 frontier_node를 모두 찾아서 저장해서 출력한다.
