@@ -1,3 +1,5 @@
+# 국내 저널 
+
 # knn 기반 frontier based 탐사 기법
 
 ## 1. advanced_knn.py

@@ -1,6 +1,6 @@
 from sklearn.neighbors import KNeighborsClassifier
 
-def allocate_frontier_node(cnt, agent_num, k , training_points, training_labels, pre_frontier_node):
+def allocate_frontier_node(cnt, agent_num, k_num , training_points, training_labels, pre_frontier_node):
     # 노드를 에이전트 들에게 할당한다.
     if cnt == 0:
         classifier = KNeighborsClassifier(n_neighbors=3)
