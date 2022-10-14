@@ -5,8 +5,8 @@ from resources import map
 map_type = map.map_data1
 explored_data = map.explored_data
 k_num = 5
-agent_num = 3
-monte_num = 100
+agent_num = 4
+monte_num = 1
 
 # advanced_knn, kimst_knn 실행
 # 결과값 출력 및 데이터 반환

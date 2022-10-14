@@ -23,7 +23,7 @@ def initialize_agent_position(map_type, explored_map , agent_num):
                 explored_map[ran_num_x][ran_num_y] = 1
                 break
 
-    print(initial_position_list)
+    print("inital agent position: " + str(initial_position_list))
     return initial_position_list
 
 
@@ -111,3 +111,7 @@ def set_explored_map(position, map_data, explored_data, map_size):
                 explored_data[position.x - 1][position.y - 1] = 3
             else:
                 explored_data[position.x - 1][position.y - 1] = 4
+
+
+def set_explored_passnode(position, explored_data):
+    explored_data[position.x][position.y] = 2
