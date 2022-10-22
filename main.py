@@ -4,13 +4,15 @@ from resources import map
 
 map_type = map.map_data1
 explored_data = map.explored_data
-k_num = 5
+k_num = 10
 agent_num = 4
-monte_num = 1
+monte_num = 2
+distance_weight = 0.7
+dp_weight = 1-distance_weight
 
 # advanced_knn, kimst_knn 실행
 # 결과값 출력 및 데이터 반환
-advanced_knn.simulate_advanced_knn(agent_num, map.map_data1, explored_data,k_num, monte_num)
+advanced_knn.simulate_advanced_knn(agent_num, map.map_data1, explored_data,k_num, monte_num , distance_weight, dp_weight)
 #kimst_knn.simulate_kimst_knn(agent_num, map.map_data1, explored_data, k_num, monte_num)
 
 # 반환 데이터 그래프로 출력
