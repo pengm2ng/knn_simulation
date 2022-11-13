@@ -10,6 +10,8 @@ from matplotlib import pyplot as plt
 from matplotlib import colors
 from operator import itemgetter
 
+from resources.frontier_function import distance
+
 
 def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, w1, w2):
     # 전역 변수
@@ -291,6 +293,12 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
 
                 '''
+                 agent 내림차순 정렬
+                '''
+                k_next_frontier_node.sort(key=lambda k_next_frontier_node: k_next_frontier_node[1])
+
+
+                '''
                     선정된 노드 후보군을 바탕으로 k값이 가장 작은 값과 프론티어 노드를 선정
                     현재 k_next_frontier_node 는 후보로 선정된 여러개의 노드들이 있다.
                     에이전트가 중복되어서 선정되어있다.
@@ -310,6 +318,35 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 '''
                 weight_sum = 0
                 agent_node_partition = []
+                agent_node_list = []
+                agent_number = 0;
+                prev_agent_number = -1;
+                '''
+                    효율이 높은 노드 4개 선정
+                    각 에이전트사이의 거리를 구해 거리가 멀리떨어지도록 노드를 선정
+                '''
+                for i in range(agent_num):
+                    agent_node_list.append([0])
+
+                for i in range(len(k_next_frontier_node)):
+                    agent_number = k_next_frontier_node[i][1]
+                    agent_node_list[agent_number].append(k_next_frontier_node[i][0])
+
+
+
+
+                local_distance = 0
+                distance_list = []
+                for i in k_next_frontier_node:
+                    for num in k_next_frontier_node:
+                        if num[1] != i[1]:
+                                local_distance = distance(i[0][0], i[0][1], num[0][0], num[0][1])
+                                distance_list.append([i[1], num[1],  i[0], num[0], local_distance])
+
+
+
+                distance_list.sort(key=lambda distance_list: distance_list[4])
+                print(distance_list)
 
                 
 

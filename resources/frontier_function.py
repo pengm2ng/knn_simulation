@@ -1,3 +1,4 @@
+import math
 import random
 
 
@@ -114,3 +115,7 @@ def set_explored_map(position, map_data, explored_data, map_size):
 
 def set_explored_passnode(position, explored_data):
     explored_data[position[0]][position[1]] = 2
+
+def distance(x1, y1, x2, y2):
+    result = math.sqrt( math.pow(x1 - x2, 2) + math.pow(y1 - y2, 2))
+    return result
