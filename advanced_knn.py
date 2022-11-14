@@ -50,7 +50,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
         while flag:
             candidate_node_list = []
             dp_list = []
-
+            whole_next_node_iter = []
             next_frontier_node = []
             # ?????????????????
             next_frontier_node_list = []
@@ -107,7 +107,12 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
             # knn 몬테카를로 검증
             # 한 iteration마다 최적의 k 값을 뽑아낸다.
+
+
             for k in range(1, k_num + 1):
+
+                if iter_cnt * agent_num < k:
+                    break;
                 # 각 k마다 탐사 노드를 할당받지 못한 에이전트의 번호를 담는 리스트
                 null_agent = []
                 #
@@ -122,6 +127,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                     knn을 통해서 각 에이전트에게 candidate node를 할당한다.
                 '''
                 for ag in range(agent_num):
+
                     training_points = training_points + agent_list[ag].get_frontier_node()
                     for i in agent_list[ag].get_frontier_node():
                         training_labels.append(ag)
@@ -321,10 +327,11 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 agent_node_list = []
                 agent_number = 0;
                 prev_agent_number = -1;
+
                 '''
                     효율이 높은 노드 4개 선정
                     각 에이전트사이의 거리를 구해 거리가 멀리떨어지도록 노드를 선정
-                '''
+                
                 for i in range(agent_num):
                     agent_node_list.append([0])
 
@@ -334,7 +341,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
 
 
-
+                
                 local_distance = 0
                 distance_list = []
                 for i in k_next_frontier_node:
@@ -348,79 +355,71 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 distance_list.sort(key=lambda distance_list: distance_list[4])
                 print(distance_list)
 
-                
+                '''
+                agent_number =0
+
+                for i in range(len(k_next_frontier_node)):
+                    if k_next_frontier_node[i][1] == agent_number:
+                        agent_node_list.append(k_next_frontier_node[i])
+                        weight_sum=weight_sum + k_next_frontier_node[i][2]
+                        agent_number = agent_number+1
 
 
-
-
-
-                print("k=" + str(k) + "일때 다음 프론티어 노드: " + str(agent_node_partition))
+                print("k=" + str(k) + "일때 다음 프론티어 노드: " + str(agent_node_list))
                 print("k=" + str(k) + "일때 총 가중치 합: " + str(weight_sum))
 
 
+                '''
+                    uav 이동 
+                    이동시간 계산
+                    이동거리 계산
+                '''
 
-                selected_k.append([k, wieght_sum])
 
 
 
-'''
-                
-                # 서로의 거리가 멀도록 다음 frontier node를 선정
-                if len(k_next_frontier_node) == 4:
-                    for w in range(len(k_next_frontier_node)):
-                        weight_sum = weight_sum + k_next_frontier_node[w][2]
-                        selected_k.append([k,weight_sum])
-                    agent_node_partition = k_next_frontier_node
-                    print(agent_node_partition)
-                    
-                else:
-                    for ag in range(agent_num):
-                        put_cnt = 0
-                        for w in range(len(k_next_frontier_node)):
-                            # print(k_next_frontier_node[w][1])
-                            if k_next_frontier_node[w][1] == ag and put_cnt == 0:
-                                agent_node_partition.append([k_next_frontier_node[w][0], k_next_frontier_node[w][1],
-                                                             k_next_frontier_node[w][2]])
-                                # print(agent_node_partition)
-                                put_cnt = put_cnt + 1
 
-                        # print(agent_node_partition[ag][0][1])
-                        weight_sum = weight_sum + agent_node_partition[ag][1]
 
-                p
+                '''
+                    weight 총정리 하여 최종이동 노드 선정
+                '''
+                selected_k.append([k, weight_sum])
+                print("현재까지의 [k, k일때의 weight_sum]: " + str(selected_k))
+                whole_next_node_iter.append([k, agent_node_list[0], agent_node_list[1], agent_node_list[2], agent_node_list[3]])
 
-                next_frontier_node_list.append(agent_node_partition)
-                each_k_weight_list.append(weight_sum)
-                # 에이전트가 새롭게 이동한 위치도 리스트로 저장
-
-            min_weight = min(each_k_weight_list)
-            min_weight_index = each_k_weight_list.index(min_weight)
-            print("선택된 k = " + str(min_weight_index + 1))
-            print(next_frontier_node_list[min_weight_index])
+            selected_k.sort(key=lambda selected_k: selected_k[1])
             final_node = []
-            final_node = next_frontier_node_list[min_weight_index]
-            final_node.sort(key=itemgetter(1))
+            final_k = []
 
-            print(final_node)
-            # print(final_node[0][0])
+            if selected_k[0][0] != 1:
+                final_k.append([selected_k[0][0], selected_k[0][1]])
+            else:
+                final_k.append([selected_k[1][0], selected_k[1][1]])
+            for i in range(len(whole_next_node_iter)):
+                if whole_next_node_iter[i][0] == final_k[0]:
+                    final_node.append(whole_next_node_iter[i])
+                    break;
+            print("선택된 최종 노드: "+ str(final_node))
+            #print(final_node[0][0][0])
+
+            '''
             for ag in range(agent_num):
                 start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
-                end = (final_node[ag][0][0], final_node[ag][0][1])
+                end = (final_node[0][ag+1][0][0], final_node[0][ag+1][0][1])
 
                 path = astar.astar(changed_map, start, end)
                 # length = 0
                 if str(type(path)) == "<class 'NoneType'>":
-                    print("**********************************************************" + str(start))
-                    print(end)
+                        print("**********************************************************" + str(start))
+                        print(end)
 
                 else:
-                    length = len(path) - 1
-                frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
+                        length = len(path) - 1
+                print(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
 
-                agent_list[ag].set_position(final_node[ag][0][0], final_node[ag][0][1], length)
+            agent_list[ag].set_position(final_node[0][ag+1][0][0], agent_node_list[0][ag+1][0][1], length)
+            frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
 
-            # 좌표를 passnode로 지정한 후 선택된 좌표로 이동시킨다.
-        # for ag in range(agent_num):
-        #   frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
-        #  print(agent_list[ag].get_position())
-        '''
+'''
+
+
