@@ -4,10 +4,10 @@ from resources import map
 
 map_type = map.map_data1
 explored_data = map.explored_data
-k_num = 10
-agent_num = 4
-monte_num = 5
-distance_weight = 0.7
+k_num = 9
+agent_num = 5
+monte_num = 2
+distance_weight = 0.3
 dp_weight = 1-distance_weight
 
 # advanced_knn, kimst_knn 실행

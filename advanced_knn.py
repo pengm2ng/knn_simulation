@@ -2,6 +2,8 @@
 #     def __int__(self, agent_num, map_type):
 #         self.agent_num = agent_num
 #         self.map_type = map_type
+import copy
+
 from resources import astar
 from resources import frontier_function
 from resources.agent import Agent
@@ -20,10 +22,13 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
     total_selected_k = []
     total_agent_path_length = []
     total_time = []
+    total_iter = []
     # 전체 몬테카를로 검증
     for monte in range(1, monte_num + 1):
-        print('advanced_knn ' + str(monte))
-        changed_map = explored_data
+
+        print('\nadvanced_knn ' + str(monte))
+
+        changed_map = copy.deepcopy(explored_data)
         flag = 1
         explored_data_temp = []
         agent_list = []
@@ -44,7 +49,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             agent_list.append(agent)
 
         # print(explored_data)
-
+        astar_map = []
         iter_cnt = 0
         # coverage가 99%를 넘으면 flag = 0이됨 = 탐사 종료
         while flag:
@@ -64,37 +69,40 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
             for ag in range(agent_num):
                 print("agent" + str(ag) + "의 위치:" + str(agent_list[ag].get_position()))
+
             # agent들이 이동할 수 있는 노드 검색
             # 현재 agent의 위치는 1로표현하며, open된 구연 즉, 이동할 수 있는 노드는 3으로 표시한다.
+
+            # 이미 3으로 된 open space 들을 6으로 바꿔버린다.
+            frontier_function.update_open_space(changed_map, map_size)
+
             for ag in range(agent_num):
                 frontier_function.set_explored_map(agent_list[ag].get_position(), map_type, changed_map, map_size)
 
+
+            # 여기서 문제점 발생 - 이전 이동 가능 노드도 3으로 지정한 것 때문에 모든 것이 candidate node로 들어가 버리게 되어버림
             frontier_function.find_candidate_node(map_size, changed_map, candidate_node_list, dp_list)
             print("candidate node : " + str(candidate_node_list))
             print("dp value : " + str(dp_list))
             # removed_alredy_node = candidate_node_list
-            if iter_cnt % 10 ==0:
-                cmap = colors.ListedColormap(['white', 'red', 'yellow', 'green', 'blue', 'black'])
+            if iter_cnt % 1 ==0:
+                cmap = colors.ListedColormap(['red', 'blue', 'yellow', 'white', 'green', 'black'])
                 plt.figure(figsize=(6, 6))
                 plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
                 plt.axis('off')
                 plt.show()
             if len(candidate_node_list) == 0:
-                print(iter_cnt)
+                total_iter.append(iter_cnt-1)
                 break
 
             # k 값에 따라 다른 지도양상을 보이므로 explored_temp에 k값만큼 저장한다.
             for k_map in range(k_num):
                 explored_data_temp.append(changed_map)
-            # cmap = colors.ListedColormap(['white', 'red', 'yellow', 'green', 'blue', 'black'])
-            # plt.figure(figsize=(6, 6))
-            # plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
-            # plt.axis('off')
-            # plt.show()
+
 
             # 최단 경로를 찾기 위하여 이동가능 경로를 모두 0으로 바꾼 map을 새롭게 정의
             # candidate node는 k의 값에 상관없이 항상 일정하기 때문에 위에서 한번만 초기화 해주면 됨
-            astar_map = changed_map
+            astar_map = copy.deepcopy(changed_map)
             for m in range(map_size):
                 for n in range(map_size):
                     if changed_map[m][n] == 3:
@@ -103,7 +111,8 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                         astar_map[m][n] = 0
                     if changed_map[m][n] == 2:
                         astar_map[m][n] = 0
-
+                    if changed_map[m][n] == 6:
+                        astar_map[m][n] = 0
             # 각각의 k의 가중치합을 담아놓는 리스트
             each_k_weight_list = []
 
@@ -111,7 +120,8 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             # 한 iteration마다 최적의 k 값을 뽑아낸다.
 
 
-            for k in range(1, k_num + 1):
+
+            for k in range(2, k_num + 1):
 
                 if iter_cnt * agent_num < k:
                     break;
@@ -134,15 +144,15 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                     for i in agent_list[ag].get_frontier_node():
                         training_labels.append(ag)
                 # print("candidate_frontier_node: " + str(candidate_node_list))
-                # print("training point: " + str(training_points))
-                # print("training label: " + str(training_labels))
+                print("training point: " + str(training_points))
+                print("training label: " + str(training_labels))
                 if len(training_labels) < k:
                     break
                 else:
                     if len(candidate_node_list) != 0:
                         allocation = knn_function.allocate_frontier_node(k, training_points, training_labels,
                                                                      candidate_node_list)
-                    #print("할당된 노드: " + str(allocation))
+                    print("할당된 노드: " + str(allocation))
 
 
                 '''
@@ -241,7 +251,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
 
 
-                for ag in range(len(null_agent)):
+                for i, ag in enumerate(null_agent):
 
                     removed_alredy_node = []
                     removed_already_dp = []
@@ -257,6 +267,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                         if cnt == 0:
                             removed_alredy_node.append(candidate_node_list[r])
                             removed_already_dp.append(dp_list[r])
+                    print("할당 x : " + str(removed_alredy_node))
                     length_temp = len(removed_alredy_node)
                     non_selected_agent_node = []
                     non_selected_agent_path = []
@@ -269,30 +280,31 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                         end = (removed_alredy_node[n][0], removed_alredy_node[n][1])
 
                         path = astar.astar(astar_map, start, end)
-
+                        print(1)
                         if str(type(path)) != "<class 'NoneType'>":
+                            print(path)
+                            print(removed_alredy_node[n][0], removed_alredy_node[n][1])
                             non_selected_agent_path.append(path)
                             non_selected_agent_path_length.append(len(path) - 1)
                             non_selected_agent_node.append([removed_alredy_node[n][0], removed_alredy_node[n][1]])
                             non_selected_agent_node_dp.append(removed_already_dp[n])
 
-                            # del removed_alredy_node(removed_alredy_node.index(n))
-                            # del removed_already_dp(removed_alredy_node.index(n))
+
                     for des in range(len(non_selected_agent_node)):
                         weight = w1 * non_selected_agent_path_length[des] + w2 * non_selected_agent_node_dp[des]
                         weight_list.append(weight)
 
-                    print("agent" + str(null_agent[ag]) + "에 재할당된 노드들의 가중치: " + str(weight_list))
+                    print("agent" + str(null_agent[i]) + "에 재할당된 노드들의 가중치: " + str(weight_list))
 
                     if len(weight_list) == 0:
-                        k_next_frontier_node.append([[agent_list[null_agent[ag]].get_position()[0],
-                                                      agent_list[null_agent[ag]].get_position()[1]], null_agent[ag], 0])
+                        k_next_frontier_node.append([[agent_list[null_agent[i]].get_position()[0],
+                                                      agent_list[null_agent[i]].get_position()[1]], null_agent[i], 0])
                     else :
                         min_weight = min(weight_list)
                         for w in range(len(weight_list)):
                             if weight_list[w] == min_weight:
                                 agent_final_candidate.append(non_selected_agent_node[w])
-                                k_next_frontier_node.append([non_selected_agent_node[w], null_agent[ag], min_weight])
+                                k_next_frontier_node.append([non_selected_agent_node[w], null_agent[i], min_weight])
 
 
 
@@ -348,8 +360,13 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 '''
                 selected_k.append([k, weight_sum])
                 print("현재까지의 [k, k일때의 weight_sum]: " + str(selected_k))
-                whole_next_node_iter.append([k, agent_node_list[0], agent_node_list[1], agent_node_list[2], agent_node_list[3]])
+                final_temp = []
+                final_temp.append(k)
+                for i in range(len(agent_node_list)):
+                    final_temp.append(agent_node_list[i])
+                whole_next_node_iter.append(final_temp)
 
+            print(whole_next_node_iter)
             selected_k.sort(key=lambda selected_k: selected_k[1])
             final_node = []
             final_k = []
@@ -368,12 +385,13 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             print("선택된 최종 노드: "+ str(final_node))
 
 
-
+            for e in astar_map:
+                print(e)
             for ag in range(agent_num):
                 start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
                 end = (final_node[0][ag+1][0][0], final_node[0][ag+1][0][1])
 
-                path = astar.astar(changed_map, start, end)
+                path = astar.astar(astar_map, start, end)
                 # length = 0
                 if str(type(path)) == "<class 'NoneType'>":
                         print("**********************************************************" + str(start))
@@ -383,8 +401,10 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                         length = len(path) - 1
                 print("agent"+str(ag)+": [" + str(agent_list[ag].get_position()[0]) + " ,"+ str(agent_list[ag].get_position()[1]) + "] 에서")
                 print("agent"+str(ag)+": [" + str(final_node[0][ag+1][0][0]) + " ,"+ str(final_node[0][ag+1][0][1]) + "] 로 이동")
-                agent_list[ag].set_position(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
                 frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
+                agent_list[ag].set_position(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
+
+    print(total_iter)
 
 
 
