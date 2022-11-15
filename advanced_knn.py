@@ -55,6 +55,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             # ?????????????????
             next_frontier_node_list = []
             iter_cnt = iter_cnt + 1
+            selected_k = []  # 각 iter 마다 선택된 k
 
             # 이전에 갔던 노드
             pre_frontier_node = []
@@ -72,7 +73,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             print("candidate node : " + str(candidate_node_list))
             print("dp value : " + str(dp_list))
             # removed_alredy_node = candidate_node_list
-            if iter_cnt == 10 or iter_cnt == 20:
+            if iter_cnt % 10 ==0:
                 cmap = colors.ListedColormap(['white', 'red', 'yellow', 'green', 'blue', 'black'])
                 plt.figure(figsize=(6, 6))
                 plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
@@ -80,6 +81,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 plt.show()
             if len(candidate_node_list) == 0:
                 print(iter_cnt)
+                break
 
             # k 값에 따라 다른 지도양상을 보이므로 explored_temp에 k값만큼 저장한다.
             for k_map in range(k_num):
@@ -137,7 +139,8 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 if len(training_labels) < k:
                     break
                 else:
-                    allocation = knn_function.allocate_frontier_node(k, training_points, training_labels,
+                    if len(candidate_node_list) != 0:
+                        allocation = knn_function.allocate_frontier_node(k, training_points, training_labels,
                                                                      candidate_node_list)
                     #print("할당된 노드: " + str(allocation))
 
@@ -236,6 +239,8 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
 
 
+
+
                 for ag in range(len(null_agent)):
 
                     removed_alredy_node = []
@@ -279,21 +284,19 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
                     print("agent" + str(null_agent[ag]) + "에 재할당된 노드들의 가중치: " + str(weight_list))
 
-                    min_weight = min(weight_list)
-
-                    for w in range(len(weight_list)):
-                        if weight_list[w] == min_weight:
-                            agent_final_candidate.append(non_selected_agent_node[w])
-                            k_next_frontier_node.append([non_selected_agent_node[w], null_agent[ag], min_weight])
-
-
-
-                    '''
-                        재할당된 노드가 존재하지 않는 경우
-                    '''
-
                     if len(weight_list) == 0:
-                        k_next_frontier_node.append([[agent_list[null_agent[ag]].get_position()[0], agent_list[null_agent[ag]].get_position()[1]], null_agent[ag], 0])
+                        k_next_frontier_node.append([[agent_list[null_agent[ag]].get_position()[0],
+                                                      agent_list[null_agent[ag]].get_position()[1]], null_agent[ag], 0])
+                    else :
+                        min_weight = min(weight_list)
+                        for w in range(len(weight_list)):
+                            if weight_list[w] == min_weight:
+                                agent_final_candidate.append(non_selected_agent_node[w])
+                                k_next_frontier_node.append([non_selected_agent_node[w], null_agent[ag], min_weight])
+
+
+
+
 
                 print("k= " + str(k) + "일때의 다음 노드 최종 후보군들: " + str(k_next_frontier_node))
 
@@ -328,34 +331,6 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 agent_number = 0;
                 prev_agent_number = -1;
 
-                '''
-                    효율이 높은 노드 4개 선정
-                    각 에이전트사이의 거리를 구해 거리가 멀리떨어지도록 노드를 선정
-                
-                for i in range(agent_num):
-                    agent_node_list.append([0])
-
-                for i in range(len(k_next_frontier_node)):
-                    agent_number = k_next_frontier_node[i][1]
-                    agent_node_list[agent_number].append(k_next_frontier_node[i][0])
-
-
-
-                
-                local_distance = 0
-                distance_list = []
-                for i in k_next_frontier_node:
-                    for num in k_next_frontier_node:
-                        if num[1] != i[1]:
-                                local_distance = distance(i[0][0], i[0][1], num[0][0], num[0][1])
-                                distance_list.append([i[1], num[1],  i[0], num[0], local_distance])
-
-
-
-                distance_list.sort(key=lambda distance_list: distance_list[4])
-                print(distance_list)
-
-                '''
                 agent_number =0
 
                 for i in range(len(k_next_frontier_node)):
@@ -367,18 +342,6 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
                 print("k=" + str(k) + "일때 다음 프론티어 노드: " + str(agent_node_list))
                 print("k=" + str(k) + "일때 총 가중치 합: " + str(weight_sum))
-
-
-                '''
-                    uav 이동 
-                    이동시간 계산
-                    이동거리 계산
-                '''
-
-
-
-
-
 
                 '''
                     weight 총정리 하여 최종이동 노드 선정
@@ -393,16 +356,19 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
             if selected_k[0][0] != 1:
                 final_k.append([selected_k[0][0], selected_k[0][1]])
+                print(final_k)
             else:
                 final_k.append([selected_k[1][0], selected_k[1][1]])
+                print(final_k)
+
             for i in range(len(whole_next_node_iter)):
-                if whole_next_node_iter[i][0] == final_k[0]:
+                if whole_next_node_iter[i][0] == final_k[0][0]:
                     final_node.append(whole_next_node_iter[i])
                     break;
             print("선택된 최종 노드: "+ str(final_node))
-            #print(final_node[0][0][0])
 
-            '''
+
+
             for ag in range(agent_num):
                 start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
                 end = (final_node[0][ag+1][0][0], final_node[0][ag+1][0][1])
@@ -415,11 +381,10 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
                 else:
                         length = len(path) - 1
-                print(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
+                print("agent"+str(ag)+": [" + str(agent_list[ag].get_position()[0]) + " ,"+ str(agent_list[ag].get_position()[1]) + "] 에서")
+                print("agent"+str(ag)+": [" + str(final_node[0][ag+1][0][0]) + " ,"+ str(final_node[0][ag+1][0][1]) + "] 로 이동")
+                agent_list[ag].set_position(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
+                frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
 
-            agent_list[ag].set_position(final_node[0][ag+1][0][0], agent_node_list[0][ag+1][0][1], length)
-            frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
-
-'''
 
 

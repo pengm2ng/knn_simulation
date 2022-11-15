@@ -6,7 +6,7 @@ map_type = map.map_data1
 explored_data = map.explored_data
 k_num = 10
 agent_num = 4
-monte_num = 2
+monte_num = 5
 distance_weight = 0.7
 dp_weight = 1-distance_weight
 
