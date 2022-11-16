@@ -28,3 +28,5 @@ class Agent:
     def get_frontier_node(self):
         return self.frontier_node_list
 
+    def get_moving_distance_list(self):
+        return self.moving_distance_list

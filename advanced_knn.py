@@ -20,9 +20,10 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
     map_size = frontier_function.cal_map_size(map_type)
     k_num_list = []
     total_selected_k = []
-    total_agent_path_length = []
     total_time = []
     total_iter = []
+    passnode_length = []
+    moving_distance_mean = []
     # 전체 몬테카를로 검증
     for monte in range(1, monte_num + 1):
 
@@ -85,7 +86,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
             print("candidate node : " + str(candidate_node_list))
             print("dp value : " + str(dp_list))
             # removed_alredy_node = candidate_node_list
-            if iter_cnt % 1 ==0:
+            if iter_cnt % 100 ==0:
                 cmap = colors.ListedColormap(['red', 'blue', 'yellow', 'white', 'green', 'black'])
                 plt.figure(figsize=(6, 6))
                 plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
@@ -153,7 +154,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                         allocation = knn_function.allocate_frontier_node(k, training_points, training_labels,
                                                                      candidate_node_list)
                     print("할당된 노드: " + str(allocation))
-
+                    print(1)
 
                 '''
                     agent_allocated_list: 각 에이전트에 할당된 노드 좌표 리스트 -> [[x1,y1],[x2,y2]...]
@@ -186,7 +187,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                     '''
                     if len(agent_allocated_list) != 0:
                         for des in range(len(agent_allocated_list)):
-
+                            print(1)
                             start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
                             end = (agent_allocated_list[des][0], agent_allocated_list[des][1])
                             path = astar.astar(astar_map, start, end)
@@ -275,6 +276,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                     non_selected_agent_node_dp = []
                     weight_list = []
                     for n in range(length_temp):
+                        print(1)
                         start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
 
                         end = (removed_alredy_node[n][0], removed_alredy_node[n][1])
@@ -403,8 +405,22 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 print("agent"+str(ag)+": [" + str(final_node[0][ag+1][0][0]) + " ,"+ str(final_node[0][ag+1][0][1]) + "] 로 이동")
                 frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
                 agent_list[ag].set_position(final_node[0][ag+1][0][0], final_node[0][ag+1][0][1], length)
+        for ag in range(agent_num):
+            passnode = agent_list[ag].get_frontier_node()
+            passnode_length.append(len(passnode))
+            moving_distance = agent_list[ag].get_moving_distance_list()
+            moving_distance_mean.append(sum(moving_distance) / len(moving_distance))
 
-    print(total_iter)
+    for ag in range(agent_num):
+        for n in range(len(passnode_length)):
+            if n%ag==0:
+                passnode_mean = passnode_mean + passnode_length[n]
+                passnode_mean = passnode_mean / monte_num
+                moving_distance_mean_mean = moving_distance_mean_mean[n] + moving_distance_mean_mean
+                moving_distance_mean_mean = moving_distance_mean_mean/ monte_num
+        print("agent"+ str(ag)+ "의 frontier_node 평균 : "+ str(passnode_mean))
+        print("agent"+ str(ag)+ "의 moving_distance 평균 : "+ str(monte_num))
 
-
+    iter_mean = sum(total_iter) / len(total_iter)
+    print("평균 iter : " + str(mean))
 
