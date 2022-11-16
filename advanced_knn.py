@@ -413,7 +413,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
     for ag in range(agent_num):
         for n in range(len(passnode_length)):
-            if n%ag==0:
+            if (n+1) % (ag+1) == 0:
                 passnode_mean = passnode_mean + passnode_length[n]
                 passnode_mean = passnode_mean / monte_num
                 moving_distance_mean_mean = moving_distance_mean_mean[n] + moving_distance_mean_mean
