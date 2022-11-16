@@ -26,7 +26,40 @@
 
 
 ### kimst와 비교해 달라진 부분
-    - 개수 비교
+    - 3,4,5 에이전트 수에 따른 비교
     - dp 개념 추가
     - 끝에서부터 5개를 training point 로 지정
  
+### 비교 kimst vs advanced
+    - 평균 탐사 시간
+    - 평균 iteration 
+    - 에이전트 각각의 평균 이동 거리
+
+### 최상의 코드
+    - [-5:] 
+    agent0의 moving_distance 평균 : 45.3
+    agent1의 moving_distance 평균 : 58.1
+    agent2의 moving_distance 평균 : 56.5
+    평균 iter : 31.9
+    평균 time : 86.6
+
+    - [-5:]x
+    agent0의 moving_distance 평균 : 56.4
+    agent1의 moving_distance 평균 : 56.3
+    agent2의 moving_distance 평균 : 53.1   
+    평균 iter : 32.0
+    평균 time : 92.2
+
+    agent0의 frontier_node 평균 : 25.1
+    agent0의 moving_distance 평균 : 50.5
+    agent1의 frontier_node 평균 : 25.1
+    agent1의 moving_distance 평균 : 45.8
+    agent2의 frontier_node 평균 : 25.1
+    agent2의 moving_distance 평균 : 41.7
+    agent3의 frontier_node 평균 : 25.1
+    agent3의 moving_distance 평균 : 42.9
+    평균 iter : 25.1
+    평균 time : 88.7
+
+    - set_explored_map
+    - 거리 dp 후 knn

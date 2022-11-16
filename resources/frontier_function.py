@@ -177,7 +177,7 @@ def set_explored_map(position, map_data, explored_data, map_size):
                 explored_data[position[0] - 1][position[1] - 1] = 3
             else:
                 explored_data[position[0] - 1][position[1] - 1] = 4
-
+    #if cnt ==0:
     for i in range(1, map_size - 1):
             for j in range(1, map_size - 1):
                 if explored_data[i][j] == 6:

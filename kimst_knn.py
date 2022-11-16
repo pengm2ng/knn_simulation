@@ -139,8 +139,8 @@ def simulate_kimst_knn(agent_num, map_type, explored_data,k,monte_num):
             '''
             for ag in range(agent_num):
                     if iter_cnt >= 5:
-                        training_points = training_points + agent_list[ag].get_frontier_node()[-5:]
-                        for i in agent_list[ag].get_frontier_node()[-5:]:
+                        training_points = training_points + agent_list[ag].get_frontier_node()
+                        for i in agent_list[ag].get_frontier_node():
                             training_labels.append(ag)
                     else:
                         training_points = training_points + agent_list[ag].get_frontier_node()
