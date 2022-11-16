@@ -119,20 +119,75 @@ def set_explored_map(position, map_data, explored_data, map_size):
                 explored_data[position[0] - 1][position[1] - 1] = 3
             else:
                 explored_data[position[0] - 1][position[1] - 1] = 4
-    if cnt == 0:
-        for i in range(1, map_size - 1):
+
+        # **********************************************************************
+
+        if explored_data[position[0] + 1][position[1]] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] + 1][position[1]] == 3:
+                explored_data[position[0] + 1][position[1]] = 3
+            else:
+                explored_data[position[0] + 1][position[1]] = 4
+            # 왼쪽
+        if explored_data[position[0] - 1][position[1]] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] - 1][position[1]] == 3:
+                explored_data[position[0] - 1][position[1]] = 3
+            else:
+                explored_data[position[0] - 1][position[1]] = 4
+            # 아래쪽
+        if explored_data[position[0]][position[1] - 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0]][position[1] - 1] == 3:
+                explored_data[position[0]][position[1] - 1] = 3
+            else:
+                explored_data[position[0]][position[1] - 1] = 4
+            # 위쪽
+        if explored_data[position[0]][position[1] + 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0]][position[1] + 1] == 3:
+                explored_data[position[0]][position[1] + 1] = 3
+            else:
+                explored_data[position[0]][position[1] + 1] = 4
+            # 오른 위
+        if explored_data[position[0] + 1][position[1] + 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] + 1][position[1] + 1] == 3:
+                explored_data[position[0] + 1][position[1] + 1] = 3
+            else:
+                explored_data[position[0] + 1][position[1] + 1] = 4
+            # 오른 아래
+        if explored_data[position[0] + 1][position[1] - 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] + 1][position[1] - 1] == 3:
+                explored_data[position[0] + 1][position[1] - 1] = 3
+            else:
+                explored_data[position[0] + 1][position[1] - 1] = 4
+            # 왼 위
+        if explored_data[position[0] - 1][position[1] + 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] - 1][position[1] + 1] == 3:
+                explored_data[position[0] - 1][position[1] + 1] = 3
+            else:
+                explored_data[position[0] - 1][position[1] + 1] = 4
+            # 왼 아래
+        if explored_data[position[0] - 1][position[1] - 1] == 9:
+            cnt = cnt + 1
+            if map_data[position[0] - 1][position[1] - 1] == 3:
+                explored_data[position[0] - 1][position[1] - 1] = 3
+            else:
+                explored_data[position[0] - 1][position[1] - 1] = 4
+
+    for i in range(1, map_size - 1):
             for j in range(1, map_size - 1):
                 if explored_data[i][j] == 6:
-                    if explored_data[i][j+1] == 9:
+                    if explored_data[i][j+1] == 9 :
                         explored_data[i][j] = 3
                     if explored_data[i][j-1] == 9:
                         explored_data[i][j] = 3
-                    '''
-                    if explored_data[i][j + 1] == 9:
-                        explored_data[i][j - 1] = 3
-                    if explored_data[i-1][j] == 9:
-                        explored_data[i+1][j] = 3
-                      '''
+                    #if explored_data[i-1][j] == 9:
+                    #    explored_data[i][j] = 3
+
 
 
 
