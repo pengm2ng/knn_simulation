@@ -1,6 +1,7 @@
 # Time Complexity는 H에 따라 다르다.
 # O(b^d), where d = depth, b = 각 노드의 하위 요소 수
 # heapque를 이용하면 길을 출력할 때 reverse를 안해도 됨
+from numba import jit
 
 class Node:
     def __init__(self, parent=None, position=None):

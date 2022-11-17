@@ -117,6 +117,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
                         astar_map[m][n] = 0
                     if changed_map[m][n] == 7:
                         astar_map[m][n] = 0
+
             # 각각의 k의 가중치합을 담아놓는 리스트
             each_k_weight_list = []
 
@@ -156,7 +157,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
                     allocation = knn_function.allocate_frontier_node(k, training_points, training_labels,
                                                                      candidate_node_list)
             print("할당된 노드: " + str(allocation))
-            print(1)
+
 
             # knn_function.show_plt(candidate_node_list, allocation, training_points, training_labels,map_type,map_size)
             '''
@@ -172,7 +173,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
                 agent_dp_list = []
                 path_length_list = []
                 path_list = []
-                weight_list = []
+
                 new_candidate_node = []  # 이동불가능한 노드를 제외한 새로운 변수
                 new_candidate_node_dp = []
 
@@ -187,19 +188,22 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
                      각 에이전트가 할당된 frontier 노드를 바탕으로 최단 경로 탐색하여 각 노드에 값 저장
                      각 에이전트가 할당된 frontier 노드를 바탕으로 dp 값을 계산하여 각 노드에 값 저장
                 '''
+
                 if len(agent_allocated_list) != 0:
                     for des in range(len(agent_allocated_list)):
 
                         start = (agent_list[ag].get_position()[0], agent_list[ag].get_position()[1])
                         end = (agent_allocated_list[des][0], agent_allocated_list[des][1])
+                        print("노드 저장완료")
                         path = astar.astar(astar_map, start, end)
-
+                        print("탐색 끝")
                         if str(type(path)) != "<class 'NoneType'>":
                             path_list.append(path)
                             path_length_list.append(len(path) - 1)
                             new_candidate_node.append([agent_allocated_list[des][0], agent_allocated_list[des][1]])
                             new_candidate_node_dp.append(agent_dp_list[des])
-
+                        else:
+                            print(type(path))
                 print("agent" + str(ag) + "에 할당된 이동가능한 노드: " + str(new_candidate_node))
                 print("agent" + str(ag) + "에 할당된 노드의 dp: " + str(new_candidate_node_dp))
                 print("agent" + str(ag) + "에 할당된 노드까지의 path_length: " + str(path_length_list))
@@ -267,7 +271,8 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
                         non_selected_agent_path_length.append(len(path) - 1)
                         non_selected_agent_node.append([removed_alredy_node[n][0], removed_alredy_node[n][1]])
                         non_selected_agent_node_dp.append(removed_already_dp[n])
-
+                    else:
+                        continue
                 if len(non_selected_agent_path_length) == 0:
                     k_next_frontier_node.append([[agent_list[null_agent[i]].get_position()[0],
                                                   agent_list[null_agent[i]].get_position()[1]], null_agent[i], 0])
@@ -357,7 +362,9 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num):
     print("평균 iter : " + str(iter_mean))
     print("평균 time : " + str(total_time))
 
-    f = open("C:/Users/장인호/Desktop/knn_simulation/sibal531.txt", 'a')
+
+    #f = open("C:/Users/장인호/Desktop/knn_simulation/sibal531.txt", 'a')
+    f = open("D:/knn_simulation/sibal531.txt", 'a')
     for ag in range(agent_num):
         f.write("agent" + str(ag) + "의 moving_distance 평균 : " + str(moving_distance_mean_mean[ag]) + "\n")
     f.write("평균 iter : " + str(iter_mean) + "\n")

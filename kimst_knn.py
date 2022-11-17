@@ -360,7 +360,8 @@ def simulate_kimst_knn(agent_num, map_type, explored_data,k,monte_num):
     print("평균 iter : " + str(iter_mean))
     print("평균 time : " + str(total_time))
 
-    f = open("C:/Users/장인호/Desktop/knn_simulation/default531.txt", 'a')
+    #f = open("C:/Users/장인호/Desktop/knn_simulation/default531.txt", 'a')
+    f = open("D:/knn_simulation/default531.txt", 'a')
     for ag in range(agent_num):
         f.write("agent" + str(ag) + "의 moving_distance 평균 : " + str(moving_distance_mean_mean[ag]) + "\n")
     f.write("평균 iter : " + str(iter_mean) + "\n")
