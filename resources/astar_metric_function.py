@@ -55,13 +55,14 @@ def astar(maze, start, end):
 
         # 현재 노드가 목적지면 current.position 추가하고
         # current의 부모로 이동
-        if currentNode == endNode:
+        if (currentNode == endNode):
             path = []
             current = currentNode
+            print(current)
             while current is not None:
                 # maze 길을 표시하려면 주석 해제
                 # x, y = current.position
-                # maze[x][y] = 7 
+                # maze[x][y] = 7
                 path.append(current.position)
                 current = current.parent
             return path[::-1]  # reverse
@@ -87,7 +88,8 @@ def astar(maze, start, end):
                 continue
 
             # 장애물이 있으면 다른 위치 불러오기
-            if maze[nodePosition[0]][nodePosition[1]] != 0:
+            if maze[int(nodePosition[0])][int(nodePosition[1])] != 0:
+
                 continue
 
             new_node = Node(currentNode, nodePosition)
@@ -97,7 +99,7 @@ def astar(maze, start, end):
         for child in children:
 
             # 자식이 closedList에 있으면 continue
-            if child in closedList:
+            if any(closedList):
                 continue
 
             # f, g, h값 업데이트

@@ -1,10 +1,21 @@
 from sklearn.neighbors import KNeighborsClassifier
 from matplotlib import pyplot as plt
 from matplotlib import colors
+from resources import knn_metric
 def allocate_frontier_node(k_num, training_points, training_labels, pre_frontier_node):
     # 노드를 에이전트 들에게 할당한다.
 
-    classifier = KNeighborsClassifier(n_neighbors=k_num,  metric="euclidean")
+    classifier = KNeighborsClassifier(n_neighbors=k_num , metric = 'euclidean')
+    print(classifier)
+    classifier.fit(training_points, training_labels)
+
+    allocation = classifier.predict(pre_frontier_node)
+
+    return allocation
+def allocate_frontier_node2(k_num, training_points, training_labels, pre_frontier_node):
+    # 노드를 에이전트 들에게 할당한다.
+
+    classifier = KNeighborsClassifier(n_neighbors=k_num)
     print(classifier)
     classifier.fit(training_points, training_labels)
 

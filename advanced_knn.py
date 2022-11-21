@@ -228,12 +228,13 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                     if len(new_candidate_node) != 0:
 
                         agent_final_candidate = []
-                        min_weight = min(weight_list)
+                        min_path = min(path_length_list)
 
-                        for w in range(len(weight_list)):
-                            if weight_list[w] == min_weight:
+                        for w in range(len(path_length_list)):
+                            if path_length_list[w] == min_path:
                                 agent_final_candidate.append(new_candidate_node[w])
-                                k_next_frontier_node.append([new_candidate_node[w], ag, min_weight])
+                                k_next_frontier_node.append(
+                                    [new_candidate_node[w], ag, new_candidate_node_dp[w], path_length_list[w]])
 
                     if len(new_candidate_node) == 0:
                         null_agent.append(ag)
@@ -304,25 +305,22 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                             non_selected_agent_node_dp.append(removed_already_dp[n])
 
 
-                    for des in range(len(non_selected_agent_node)):
-                        weight = w1 * non_selected_agent_path_length[des] + w2 * non_selected_agent_node_dp[des]
-                        weight_list.append(weight)
+
 
                     print("agent" + str(null_agent[i]) + "에 재할당된 노드들의 가중치: " + str(weight_list))
 
-                    if len(weight_list) == 0:
+                    if len(non_selected_agent_path_length) == 0:
                         k_next_frontier_node.append([[agent_list[null_agent[i]].get_position()[0],
-                                                      agent_list[null_agent[i]].get_position()[1]], null_agent[i], 0])
-                    else :
-                        min_weight = min(weight_list)
-                        for w in range(len(weight_list)):
-                            if weight_list[w] == min_weight:
+                                                      agent_list[null_agent[i]].get_position()[1]], null_agent[i], 0,
+                                                     0])
+                    else:
+                        min_non_path_length_list = min(non_selected_agent_path_length)
+                        for w in range(len(non_selected_agent_path_length)):
+                            if non_selected_agent_path_length[w] == min_non_path_length_list:
                                 agent_final_candidate.append(non_selected_agent_node[w])
-                                k_next_frontier_node.append([non_selected_agent_node[w], null_agent[i], min_weight])
-
-
-
-
+                                k_next_frontier_node.append(
+                                    [non_selected_agent_node[w], null_agent[i], non_selected_agent_node_dp[w],
+                                     non_selected_agent_path_length[w]])
 
                 print("k= " + str(k) + "일때의 다음 노드 최종 후보군들: " + str(k_next_frontier_node))
 
@@ -330,7 +328,7 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
                 '''
                  agent 내림차순 정렬
                 '''
-                k_next_frontier_node.sort(key=lambda k_next_frontier_node: k_next_frontier_node[1])
+                k_next_frontier_node.sort(key=lambda k_next_frontier_node: (k_next_frontier_node[1],k_next_frontier_node[2]))
 
 
                 '''
@@ -359,28 +357,33 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
 
                 agent_number =0
 
-                for i in range(len(k_next_frontier_node)):
-                    if k_next_frontier_node[i][1] == agent_number:
-                        agent_node_list.append(k_next_frontier_node[i])
-                        weight_sum=weight_sum + k_next_frontier_node[i][2]
-                        agent_number = agent_number+1
+                for i, v in enumerate(k_next_frontier_node):
+                    if v[1] == agent_number:
+                        agent_node_list.append(v)
+                        agent_number = agent_number + 1
+
 
 
                 print("k=" + str(k) + "일때 다음 프론티어 노드: " + str(agent_node_list))
-                print("k=" + str(k) + "일때 총 가중치 합: " + str(weight_sum))
+                weight_sum = 0
+                for i,v in enumerate(agent_node_list):
+                    weight_sum = weight_sum+ v[3]
 
                 '''
                     weight 총정리 하여 최종이동 노드 선정
                 '''
                 selected_k.append([k, weight_sum])
                 print("현재까지의 [k, k일때의 weight_sum]: " + str(selected_k))
+
                 final_temp = []
                 final_temp.append(k)
                 for i in range(len(agent_node_list)):
                     final_temp.append(agent_node_list[i])
                 whole_next_node_iter.append(final_temp)
 
-            print(whole_next_node_iter)
+            for e in whole_next_node_iter:
+
+                print(e)
             selected_k.sort(key=lambda selected_k: selected_k[1])
             final_node = []
             final_k = []
@@ -460,8 +463,8 @@ def simulate_advanced_knn(agent_num, map_type, explored_data, k_num, monte_num, 
     print("평균 iter : " + str(iter_mean))
     print("평균 time : " + str(total_time))
 
-    #f = open("C:/Users/장인호/Desktop/knn_simulation/advance531.txt", 'a')
-    f = open("D:/knn_simulation/advance531.txt", 'a')
+    f = open("C:/Users/장인호/Desktop/knn_simulation/advance.txt", 'a')
+    #f = open("D:/knn_simulation/advance531.txt", 'a')
     for ag in range(agent_num):
         f.write("agent"+ str(ag)+ "의 moving_distance 평균 : " + str(moving_distance_mean_mean[ag])+ "\n")
     f.write("평균 iter : " + str(iter_mean)+"\n")

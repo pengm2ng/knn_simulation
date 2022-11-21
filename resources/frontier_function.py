@@ -21,10 +21,10 @@ def initialize_agent_position(map_type, explored_map , agent_num):
                 continue
             else:
                 initial_position_list.append([ran_num_x, ran_num_y])
-                explored_map[ran_num_x][ran_num_y] = 1
+
                 break
 
-    print("inital agent position: " + str(initial_position_list))
+    #print("inital agent position: " + str(initial_position_list))
     return initial_position_list
 
 
@@ -54,7 +54,7 @@ def find_candidate_node(map_size, explored_data, candidate_node_list, dp_list):
 
                 if dp != 0:
                     dp = 8 - dp
-                    candidate_node_list.append([i, j])
+                    candidate_node_list.append((i, j))
                     dp_list.append(dp)
 
 #
@@ -185,10 +185,12 @@ def set_explored_map(position, map_data, explored_data, map_size):
                         explored_data[i][j] = 3
                     if explored_data[i][j-1] == 9:
                         explored_data[i][j] = 3
-                    if explored_data[i-1][j] == 9:
+                    if explored_data[i-1][j] == 9 :
                         explored_data[i][j] = 3
-                    if explored_data[i+1][j] == 9:
+                    if explored_data[i+1][j-1] == 9:
                         explored_data[i][j] = 3
+
+
 
 
 
