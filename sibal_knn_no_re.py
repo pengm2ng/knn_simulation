@@ -246,7 +246,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
                             eu_dist = distance.euclidean(agent_list[ag].get_position(),new_candidate_node[w])
                             k_next_frontier_node_temp.append([new_candidate_node[w], ag, new_candidate_node_dp[w], path_length_list[w], path_list[w],eu_dist])
                             print([new_candidate_node[w], ag, new_candidate_node_dp[w], path_length_list[w], path_list[w]])
-                    k_next_frontier_node_temp.sort(key=lambda k_next_frontier_node_temp: (k_next_frontier_node_temp[1],k_next_frontier_node_temp[3],k_next_frontier_node_temp[2]))
+                    k_next_frontier_node_temp.sort(key=lambda k_next_frontier_node_temp: (k_next_frontier_node_temp[1],k_next_frontier_node_temp[3],k_next_frontier_node_temp[4]))
                     for e in k_next_frontier_node_temp:
                         print(e)
                     k_next_frontier_node.append(k_next_frontier_node_temp[0])
@@ -330,7 +330,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
                 frontier_node_list_y[ag].append(v[1])
 
     print("##################################3")
-    color = ['bs-', 'rs-', 'ys-', 'ks-', 'ys-', 'os-']
+    color = ['bs-', 'rs-', 'ys-', 'ks-', 'gs-', 'cs-']
     print(agent_list[0].get_frontier_node())
     for ag in range(agent_num):
         x1 = frontier_node_list_x[ag]

@@ -186,6 +186,7 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
             print("이동가능한 노드:"+ str(agent_candidate_node_list))
             path_length_list = []
             non_selected =[]
+
             for al in range(agent_num):
                 min = 9999999
                 path_length_list.append([al])
@@ -194,35 +195,56 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
                     continue
                 else:
                     for w in range(1, len(agent_candidate_node_list[al])):
-                        distance_agent_node = distance.euclidean(agent_list[al].get_position(),agent_candidate_node_list[al][w])
-                        distance_init_node = distance.euclidean(agent_list[al].get_frontier_node()[0],agent_candidate_node_list[al][w])
-                        print("초기위치" + str(agent_list[al].get_frontier_node()[0]))
-                        omega =distance_agent_node + distance_init_node
-                        if min > omega:
-                            node = [agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1]]
-                            min = omega
-                            agent_path = omega
+                        print("엣힝")
+                        print(w)
+                        print(w, agent_candidate_node_list[al][0],agent_candidate_node_list[al][w])
 
+                        start = agent_list[al].get_position()
+                        end = (agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1])
 
+                        path = astar.astar(astar_map, start, end)
+
+                        if str(type(path)) != "<class 'NoneType'>":
+                            path_length_list[al].append([[end[0],end[1]], path, len(path)-1])
                         else:
-                            non_selected.append([agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1]])
-                    path_length_list[al].append(node)
-                    path_length_list[al].append(agent_path)
-                    path_length_list[al].append(0)
-                    agent_candidate_node_list[al].remove(node)
-            print(agent_candidate_node_list)
+                            print("불가 판단 노드: "+str(end))
 
-            print("1차 후보" + str(path_length_list))
+            print("이동가능한 노드 선별:" + str(agent_candidate_node_list))
+            print("이동가능한 노드와 길이" + str(path_length_list))
+
+
+            final_node = []
+            for ag in range(agent_num):
+                final_node.append([ag])
+
 
             for al in range(agent_num):
+                min = 9999999
+
+                # agent 0
                 if len(agent_candidate_node_list[al]) == 1:
+                    final_node[al].append([agent_list[al].get_position(), 0, []])
                     continue
                 else:
+                    for w in range(1, len(path_length_list[al])):
+                        distance_agent_node = distance.euclidean(agent_list[al].get_position(),path_length_list[al][w][0])
+                        distance_init_node = distance.euclidean(agent_list[al].get_frontier_node()[0],path_length_list[al][w][0])
 
-                    for w in range(1, len(agent_candidate_node_list[al])):
-                        print(1)
-                        print([agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1]])
-                        non_selected.append([agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1]])
+                        omega =0.8*distance_agent_node + 0.2*distance_init_node
+                        if min > omega:
+                            node = (path_length_list[al][w][0][0],path_length_list[al][w][0][1])
+                            min = omega
+                    start = agent_list[al].get_position()
+                    path = astar.astar(astar_map, start, node)
+                    print("초기위치" + str(agent_list[al].get_frontier_node()[0]))
+                    print(node)
+                    final_node[al].append([[node[0],node[1]], len(path)-1, path])
+
+            print("최종 후보")
+            for e in final_node:
+                print(e)
+
+
 
             if iter_cnt % 100 == 0:
                 cmap = colors.ListedColormap(['red', 'blue', 'yellow', 'white', 'green', 'purple'])
@@ -234,9 +256,9 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
 
             for ag in range(agent_num):
                 print("agent" + str(ag) + ": [" + str(agent_list[ag].get_position()[0]) + " ," + str(agent_list[ag].get_position()[1]) + "] 에서")
-                #print("agent" + str(ag) + ": [" + str(final_node[ag][0][0]) + " ," + str(final_node[ag][0][1]) + "] 로" + str(length) + "만큼 이동")
+                print("agent" + str(ag) + ": [" + str(final_node[ag][1][0][0]) + " ," + str(final_node[ag][1][0][1]) + "] 로 이동")
                 frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
-                agent_list[ag].set_position(path_length_list[ag][1][0], path_length_list[ag][1][1], path_length_list[ag][2], path_length_list[ag][3])
+                agent_list[ag].set_position(final_node[ag][1][0][0], final_node[ag][1][0][1], final_node[ag][1][1], final_node[ag][1][2])
 
                 if time < agent_list[ag].get_moving_distance_list()[iter_cnt - 1]:
                     print(agent_list[ag].get_moving_distance_list()[iter_cnt - 1])
@@ -316,7 +338,11 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
     f.write("평균 iter : " + str(iter_mean) + "\n")
     f.write("평균 time : " + str(total_time) + "\n\n")
     f.close()
-
+    return_value = []
+    for ag in range(agent_num):
+        return_value.append(moving_distance_mean_mean[ag])
+    return_value.append(total_time)
+    return return_value
 '''
                 
 

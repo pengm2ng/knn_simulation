@@ -165,8 +165,8 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
                     for i in agent_list[ag].get_frontier_node()[-k:]:
                         training_labels.append(ag)
                 else:
-                    training_points = training_points + agent_list[ag].get_frontier_node()[-iter_cnt:]
-                    for i in agent_list[ag].get_frontier_node()[-iter_cnt:]:
+                    training_points = training_points + agent_list[ag].get_frontier_node()
+                    for i in agent_list[ag].get_frontier_node():
                         training_labels.append(ag)
             # print("candidate_frontier_node: " + str(candidate_node_list))
             print("training point: " + str(training_points))
@@ -244,13 +244,13 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
 
                             agent_final_candidate.append(new_candidate_node[w])
                             eu_dist = distance.euclidean(agent_list[ag].get_position(),new_candidate_node[w])
-                            weight = dpw * new_candidate_node_dp[w] + euw* eu_dist;
+                            weight = (dpw * new_candidate_node_dp[w]) + (euw * eu_dist);
                             k_next_frontier_node_temp.append([new_candidate_node[w], ag, new_candidate_node_dp[w], path_length_list[w], path_list[w],eu_dist,weight])
 
-                    k_next_frontier_node_temp.sort(key=lambda k_next_frontier_node_temp: (k_next_frontier_node_temp[1],k_next_frontier_node_temp[3],k_next_frontier_node_temp[5] ))
-
+                    k_next_frontier_node_temp.sort(key=lambda k_next_frontier_node_temp: (k_next_frontier_node_temp[1],k_next_frontier_node_temp[3],k_next_frontier_node_temp[6] ))
+                    print("앙")
                     for e in k_next_frontier_node_temp:
-                        print("앙")
+
                         print(e)
                     k_next_frontier_node.append(k_next_frontier_node_temp[0])
 
@@ -333,7 +333,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
                 frontier_node_list_y[ag].append(v[1])
 
     print("##################################3")
-    color = ['bs-', 'rs-', 'ys-', 'ks-', 'ys-', 'os-']
+    color = ['bs-', 'rs-', 'ys-', 'ks-', 'gs-', 'cs-']
     print(agent_list[0].get_frontier_node())
     for ag in range(agent_num):
         x1 = frontier_node_list_x[ag]
@@ -381,6 +381,11 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
     f.write("평균 iter : " + str(iter_mean) + "\n")
     f.write("평균 time : " + str(total_time) + "\n\n")
     f.close()
+    return_value = []
+    for ag in range(agent_num):
+        return_value.append(moving_distance_mean_mean[ag])
+    return_value.append(total_time)
+    return return_value
 
 
 
