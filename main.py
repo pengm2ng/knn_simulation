@@ -9,6 +9,7 @@ from resources import map, init_pos, init_pos_generator
 import dp_first
 import dynamic_vornoi_partition_no_re
 import sibal_knn_no_re_dist
+import frontier_based
 
 map_type = map.map_data1
 explored_data = map.explored_data
@@ -49,25 +50,30 @@ for i in range(3):
     init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,monte_num)
     ret1 = sibal_knn_no_re_dist.simulate_sibal_knn(agent_num, map_type, explored_data, 6, monte_num, init_pos, 0.1, 0.9)
     ret2 = dynamic_vornoi_partition_no_re.simulate_voronoi(agent_num, map_type, explored_data, 1, monte_num, init_pos)
+    ret3 = frontier_based.frontier_based(agent_num, map_type, explored_data, 1, monte_num, init_pos)
 
     if i == 0:
         for j in range(len(ret1)):
             result1.append(0)
             result2.append(0)
+            result3.append(0)
 
 
 
     for j in range(len(ret1)):
         result1[j] = result1[j]+ret1[j]
         result2[j] = result2[j]+ret2[j]
+        result3[j] = result3[j]+ret3[j]
 
 
 for i in range(len(ret1)):
     result1[i] = result1[i]/agent_num
     result2[i] = result2[i]/agent_num
+    result3[i] = result3[i]/agent_num
 
 print(result1)
 print(result2)
+print(result3)
 
 #dynamic_vornoi_partition_no_re.simulate_voronoi(3, map_type, explored_data, 1, monte_num, init_pos)
 #sibal_knn_no_re_dist.simulate_sibal_knn(4, map_type, explored_data, 6, monte_num, init_pos, dpw, euw)
