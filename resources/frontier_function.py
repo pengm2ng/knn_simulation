@@ -187,6 +187,16 @@ def set_explored_map(position, map_data, explored_data, map_size):
                         explored_data[i][j] = 3
                     if explored_data[i-1][j] == 9 :
                         explored_data[i][j] = 3
+                    if explored_data[i+1][j] == 9:
+                        explored_data[i][j] = 3
+
+
+                    if explored_data[i-1][j+1] == 9 :
+                        explored_data[i][j] = 3
+                    if explored_data[i+1][j-1] == 9:
+                        explored_data[i][j] = 3
+                    if explored_data[i-1][j+1] == 9 :
+                        explored_data[i][j] = 3
                     if explored_data[i+1][j-1] == 9:
                         explored_data[i][j] = 3
 

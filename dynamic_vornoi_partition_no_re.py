@@ -296,7 +296,7 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
         print(y1)
         plt.plot(x1, y1, color[ag])
         plt.axis([0, 20, 0, 20])
-
+        plt.grid(True)
     plt.show()
 
 

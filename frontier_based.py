@@ -148,28 +148,9 @@ def frontier_based(agent_num, map_type, explored_data,k,monte_num,init_position)
             null_agent = []
 
             k_next_frontier_node = []
-            print("\nk=" + str(k) + "일때, 각 에이전트에게 할당된 노드")
-                # 에이전트에게 frontier 노드 할당
-            training_points = []
-            training_labels = []
 
-            # 1차 노드를 에이전트에게 할당
-            '''
-                    knn을 통해서 각 에이전트에게 candidate node를 할당한다.
-            '''
-            for ag in range(agent_num):
-                    training_points.append(agent_list[ag].get_position())
-                    training_labels.append(ag)
-                # print("candidate_frontier_node: " + str(candidate_node_list))
+            print("노드 후보군: " + str(candidate_node_list))
 
-            print("training point: " + str(training_points))
-            print("training label: " + str(training_labels))
-            print("candidate points: " + str(candidate_points))
-
-            allocation = knn_function.allocate_frontier_node(1, training_points, training_labels,candidate_points)
-            print("할당된 노드: " + str(allocation))
-            for w in range(len(candidate_points)):
-                voronoi_map[candidate_points[w][0]][candidate_points[w][1]] = allocation[w]+1
             '''
             cmap = colors.ListedColormap(['red', 'blue', 'yellow', 'white', 'green', 'black','green', 'yellow', 'blue'])
             plt.figure(figsize=(6, 6))
@@ -177,71 +158,99 @@ def frontier_based(agent_num, map_type, explored_data,k,monte_num,init_position)
             plt.axis('off')
             plt.show()
             '''
+            movable_candidate = []
+            for w in range(len(candidate_node_list)):
+                if changed_map[candidate_node_list[w][0]][candidate_node_list[w][1]] == 3:
+                    movable_candidate.append([candidate_node_list[w][0],candidate_node_list[w][1]])
 
-            for w in range(len(allocation)):
-                for ag in range(agent_num):
-                    if allocation[w] == ag and changed_map[candidate_points[w][0]][candidate_points[w][1]] == 3:
-                        agent_candidate_node_list[ag].append([candidate_points[w][0],candidate_points[w][1]])
+            print("이동가능한 노드:"+ str(movable_candidate))
 
-            print("이동가능한 노드:"+ str(agent_candidate_node_list))
+
             path_length_list = []
-            non_selected =[]
-
             for al in range(agent_num):
-                min = 9999999
-                path_length_list.append([al])
-                # agent 0
-                if len(agent_candidate_node_list[al]) == 1:
-                    continue
-                else:
-                    for w in range(1, len(agent_candidate_node_list[al])):
-                        print("엣힝")
-                        print(w)
-                        print(w, agent_candidate_node_list[al][0],agent_candidate_node_list[al][w])
+                min = 9999999999999
 
-                        start = agent_list[al].get_position()
-                        end = (agent_candidate_node_list[al][w][0],agent_candidate_node_list[al][w][1])
+                for w in range(len(movable_candidate)):
 
-                        path = astar.astar(astar_map, start, end)
+                    start = agent_list[al].get_position()
+                    end = (movable_candidate[w][0],movable_candidate[w][1])
+                    path = astar.astar(astar_map, start, end)
 
-                        if str(type(path)) != "<class 'NoneType'>":
-                            path_length_list[al].append([[end[0],end[1]], path, len(path)-1])
-                        else:
-                            print("불가 판단 노드: "+str(end))
+                    if str(type(path)) != "<class 'NoneType'>":
+                        path_length_list.append([al, [end[0], end[1]], len(path) - 1, path])
 
-            print("이동가능한 노드 선별:" + str(agent_candidate_node_list))
-            print("이동가능한 노드와 길이" + str(path_length_list))
+                    else:
+                        ("불가 판단 노드: "+str(end))
 
 
+
+            path_length_list.sort(key=lambda path_length_list: (path_length_list[0],path_length_list[2]))
+            for e in path_length_list:
+                print(e)
+
+
+            '''
+                겹치는 노드 삭제
+                길이 비교하여 더 나은 쪽으로 삭제
+            '''
+
+            final_node_temp = []
+            w_list = []
+
+            for ag in range(agent_num):
+                final_node_temp.append([0])
+
+
+            for ag in range(agent_num):
+                for w in range(len(path_length_list)):
+                    if ag == path_length_list[w][0]:
+                        final_node_temp[ag].append(path_length_list[w])
+
+            print(final_node_temp)
+
+            final_flag = 1
             final_node = []
             for ag in range(agent_num):
-                final_node.append([ag])
+                final_node.append(final_node_temp[ag][1])
+                final_node_temp[ag][0] = final_node_temp[ag][0] + 1
 
 
-            for al in range(agent_num):
-                min = 9999999
+            if len(candidate_node_list) >= agent_num:
+                print(len(candidate_node_list))
+                while final_flag:
+                    print("앙기모링")
+                    print(final_node)
 
-                # agent 0
-                if len(agent_candidate_node_list[al]) == 1:
-                    final_node[al].append([agent_list[al].get_position(), 0, []])
-                    continue
-                else:
-                    for w in range(1, len(path_length_list[al])):
-                        distance_agent_node = distance.euclidean(agent_list[al].get_position(),path_length_list[al][w][0])
-                        distance_init_node = distance.euclidean(agent_list[al].get_frontier_node()[0],path_length_list[al][w][0])
+                    final_node.sort(key=lambda final_node: (final_node[1], final_node[2]))
+                    final_count = 0
+                    for num in range(0, agent_num-1):
+                        if final_node[num][1] == final_node[num+1][1]:
+                            final_count=final_count+1
+                            print(final_node[num], final_node[num+1])
 
-                        omega =0.8*distance_agent_node + 0.2*distance_init_node
-                        if min > omega:
-                            node = (path_length_list[al][w][0][0],path_length_list[al][w][0][1])
-                            min = omega
-                    start = agent_list[al].get_position()
-                    path = astar.astar(astar_map, start, node)
-                    print("초기위치" + str(agent_list[al].get_frontier_node()[0]))
-                    print(node)
-                    final_node[al].append([[node[0],node[1]], len(path)-1, path])
+
+                    if final_count ==0:
+                        break
+
+                    for ag in range(agent_num):
+                        node = final_node[ag][1]
+                        for al in range(1, agent_num):
+                            if final_node[al][1] == node and ag != al:
+                                ag_n = final_node[al][0]
+                                new_index = final_node_temp[ag_n][0]+1
+                                final_node[al] = final_node_temp[ag][new_index]
+                                final_node_temp[al][0] = final_node_temp[al][0] + 1
+            else:
+                final_node.sort(key=lambda final_node: (final_node[1], final_node[2]))
+                final_count = 0
+                for num in range(0, agent_num - 1):
+                    if final_node[num][1] == final_node[num + 1][1]:
+                        final_count = final_count + 1
+                        print(final_node[num], final_node[num + 1])
+                        final_node[num+1] = [num+1, agent_list[num+1].get_position(), 0, []]
 
             print("최종 후보")
-            for e in final_node:
+            for e in final_node_temp:
                 print(e)
 
 
@@ -256,9 +265,9 @@ def frontier_based(agent_num, map_type, explored_data,k,monte_num,init_position)
 
             for ag in range(agent_num):
                 print("agent" + str(ag) + ": [" + str(agent_list[ag].get_position()[0]) + " ," + str(agent_list[ag].get_position()[1]) + "] 에서")
-                print("agent" + str(ag) + ": [" + str(final_node[ag][1][0][0]) + " ," + str(final_node[ag][1][0][1]) + "] 로 이동")
+                print("agent" + str(ag) + ": [" + str(final_node[ag][1][0]) + " ," + str(final_node[ag][1][1]) + "] 로 이동")
                 frontier_function.set_explored_passnode(agent_list[ag].get_position(), changed_map)
-                agent_list[ag].set_position(final_node[ag][1][0][0], final_node[ag][1][0][1], final_node[ag][1][1], final_node[ag][1][2])
+                agent_list[ag].set_position(final_node[ag][1][0], final_node[ag][1][1], final_node[ag][2], final_node[ag][3])
 
                 if time < agent_list[ag].get_moving_distance_list()[iter_cnt - 1]:
                     print(agent_list[ag].get_moving_distance_list()[iter_cnt - 1])
@@ -296,7 +305,7 @@ def frontier_based(agent_num, map_type, explored_data,k,monte_num,init_position)
         print(y1)
         plt.plot(x1, y1, color[ag])
         plt.axis([0, 20, 0, 20])
-
+        plt.grid(True)
     plt.show()
 
 
