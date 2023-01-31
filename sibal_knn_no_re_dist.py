@@ -339,19 +339,19 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
         for map_count1 in range(20):
             for map_count2 in range(20):
                 if map_type[map_count1][map_count2] == 1:
-                    plt.plot(map_count1, map_count2, 'ks', markersize=10)
+                    plt.plot(map_count1, map_count2, 'ks' , markersize=8)
         x1 = frontier_node_list_x[ag]
         y1 = frontier_node_list_y[ag]
         print(x1)
         print(y1)
-        plt.plot(x1, y1, color[ag], marker='o', markersize=8, label='agent '+str(ag))
+        plt.plot(x1, y1, color[ag], marker='o', markersize=8, label='agent '+str(ag+1))
         plt.axis([-1, 20, -1, 20])
 
         plt.grid(True)
         plt.xticks(range(21))
         plt.yticks(range(21))
     for ag in range(agent_num):
-        plt.plot(init_position[0][ag][0], init_position[0][ag][1], color[ag], markersize=10)
+        plt.plot(init_position[0][ag][0], init_position[0][ag][1], 'rs' , markersize=9)
 
     plt.legend(loc='upper right')
     plt.xlabel('X-Axis')
