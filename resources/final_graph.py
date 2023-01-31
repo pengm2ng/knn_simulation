@@ -1,4 +1,5 @@
 
+import pandas as pd
 
 
 
@@ -22,7 +23,9 @@ voronoi_2_dist =[
 proposed1_2_dist =[[[64.0, 83.0], 103.0], [[78.0, 60.0],89.0], [[73.0, 76.0], 91.0], [[82.0, 75.0],108.0],  [[72.0, 64.0],86.0],
                    [[84.0, 74.0],113.0],  [[87.0, 59.0],94.0], [[60.0, 76.0],85.0],  [[72.0, 61.0],86.0],  [[63.0, 82.0],96.0]
                    ]
-
+proposed2_2_time =[]
+voronoi_2_time = []
+proposed1_2_time =[]
 
 
 proposed2_3_dist =[
@@ -84,3 +87,13 @@ proposed1_6_dist =[
 proposed2_6_time =[]
 voronoi_6_time = []
 proposed1_6_time =[]
+
+
+for ag in range(10):
+    proposed2_2_time.append(proposed2_2_dist[ag][1])
+    voronoi_2_time.append(voronoi_2_time[ag][1])
+    proposed1_2_time.append(proposed1_2_dist[ag][1])
+
+
+index = ['2' ,'3', '4', '5', '6']
+columns = ['Voronoi', 'Proposed 1', 'Proposed 2']
