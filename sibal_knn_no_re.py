@@ -330,16 +330,25 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
                 frontier_node_list_y[ag].append(v[1])
 
     print("##################################3")
-    color = ['bs-', 'rs-', 'ys-', 'ks-', 'gs-', 'cs-']
+    color = ['bs', 'ms', 'ys', 'gs', 'ks', 'rs']
     print(agent_list[0].get_frontier_node())
     for ag in range(agent_num):
+        for map_count1 in range(20):
+            for map_count2 in range(20):
+                if map_type[map_count1][map_count2] == 1:
+                    plt.plot(map_count1, map_count2, 'ks', markersize=10)
         x1 = frontier_node_list_x[ag]
         y1 = frontier_node_list_y[ag]
         print(x1)
         print(y1)
-        plt.plot(x1, y1, color[ag])
-        plt.axis([0, 20, 0, 20])
+        plt.plot(x1, y1, color[ag], marker='o', markersize=8)
+        plt.axis([-1, 20, -1, 20])
 
+        plt.grid(True)
+        plt.xticks(range(21))
+        plt.yticks(range(21))
+    for ag in range(agent_num):
+        plt.plot(init_position[0][ag][0], init_position[0][ag][1], color[ag], markersize=10)
     plt.show()
 
     passnode_mean = []
@@ -366,19 +375,22 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
     print("평균 time : " + str(total_time))
 
 
-    f = open("C:/Users/장인호/Desktop/knn_simulation/result/total.txt", 'a')
+    #f = open("C:/Users/장인호/Desktop/knn_simulation/result/total.txt", 'a')
     #f = open("D:/knn_simulation/sibal531.txt", 'a')
-    f.write("k= " + str(k) + "  ")
-    f.write("agent_num= " + str(agent_num) + "  ")
-    f.write("monte_num= " + str(monte_num) + "\n\n")
+    #f.write("k= " + str(k) + "  ")
+    #f.write("agent_num= " + str(agent_num) + "  ")
+    #f.write("monte_num= " + str(monte_num) + "\n\n")
 
+
+    #f.write("평균 iter : " + str(iter_mean) + "\n")
+    #f.write("평균 time : " + str(total_time) + "\n\n")
+    #f.close()
+    return_value = []
     for ag in range(agent_num):
-
-        f.write("agent" + str(ag) + "의 moving_distance 평균 : " + str(moving_distance_mean_mean[ag]) + "\n")
-    f.write("평균 iter : " + str(iter_mean) + "\n")
-    f.write("평균 time : " + str(total_time) + "\n\n")
-    f.close()
-
+        return_value.append(moving_distance_mean_mean[ag])
+    return_value.append(total_time)
+    return_value.append(iter_mean)
+    return return_value
 
 
 

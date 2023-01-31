@@ -46,36 +46,50 @@ init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num
 result1=[]
 result2=[]
 result3=[]
-agent_num=2
-monte_num =5
+agent_num=4
+monte_num =1
 for i in range(monte_num):
     init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
     ret1 = sibal_knn_no_re_dist.simulate_sibal_knn(agent_num, map_type, explored_data, 6, 1, init_pos, 0.1, 0.9)
+    ret3 = sibal_knn_no_re.simulate_sibal_knn(agent_num, map_type, explored_data, 6, 1, init_pos)
     ret2 = dynamic_vornoi_partition_no_re.simulate_voronoi(agent_num, map_type, explored_data, 1, 1, init_pos)
-    ret3 = frontier_based.frontier_based(agent_num, map_type, explored_data, 1, 1, init_pos)
 
     if i == 0:
-        for j in range(len(ret1)):
+        for j in range(len(ret1)-2):
             result1.append(0)
             result2.append(0)
             result3.append(0)
 
 
 
-    for j in range(len(ret1)):
+    for j in range(len(ret1)-2):
         result1[j] = result1[j]+ret1[j]
         result2[j] = result2[j]+ret2[j]
         result3[j] = result3[j]+ret3[j]
 
 
-for i in range(len(ret1)):
+for i in range(len(ret1)-2):
     result1[i] = result1[i]/monte_num
     result2[i] = result2[i]/monte_num
     result3[i] = result3[i]/monte_num
 
-print(result1)
-print(result2)
-print(result3)
+print()
+print("*******************************************")
+print()
+print("distance")
+print("proposed 2: " + str(result1[:len(ret1)-2]))
+print("voronoi : " + str(result2[:len(ret1)-2]))
+print("proposed 1: "+ str(result3[:len(ret1)-2]))
+print()
+print("total_time")
+print("proposed 2: " + str(ret1[-2:-1]))
+print("voronoi : " + str(ret2[-2:-1]))
+print("proposed 1: "+ str(ret3[-2:-1]))
+print()
+print("iter_mean")
+print("proposed 2: " + str(ret1[-1:]))
+print("voronoi : " + str(ret2[-1:]))
+print("proposed 1: "+ str(ret3[-1:]))
 
 #dynamic_vornoi_partition_no_re.simulate_voronoi(3, map_type, explored_data, 1, monte_num, init_pos)
 #sibal_knn_no_re_dist.simulate_sibal_knn(4, map_type, explored_data, 6, monte_num, init_pos, dpw, euw)

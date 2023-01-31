@@ -326,22 +326,21 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
     print("평균 iter : " + str(iter_mean))
     print("평균 time : " + str(total_time))
 
-    f = open("C:/Users/장인호/Desktop/knn_simulation/result/kimst_map1_temp.txt", 'a')
+    #f = open("C:/Users/장인호/Desktop/knn_simulation/result/kimst_map1_temp.txt", 'a')
     #f = open("D:/knn_simulation/default531.txt", 'a')
-    f.write("k= " + str(k) + "  ")
-    f.write("agent_num= " + str(agent_num) + "  ")
-    f.write("monte_num= " + str(monte_num) + "\n\n")
+    #f.write("k= " + str(k) + "  ")
+    #f.write("agent_num= " + str(agent_num) + "  ")
+    #f.write("monte_num= " + str(monte_num) + "\n\n")
 
-    for ag in range(agent_num):
 
-        f.write("agent" + str(ag) + "의 moving_distance 평균 : " + str(moving_distance_mean_mean[ag]) + "\n")
-    f.write("평균 iter : " + str(iter_mean) + "\n")
-    f.write("평균 time : " + str(total_time) + "\n\n")
-    f.close()
+    #f.write("평균 iter : " + str(iter_mean) + "\n")
+    #f.write("평균 time : " + str(total_time) + "\n\n")
+    #f.close()
     return_value = []
     for ag in range(agent_num):
         return_value.append(moving_distance_mean_mean[ag])
     return_value.append(total_time)
+    return_value.append(iter_mean)
     return return_value
 '''
                 
