@@ -48,7 +48,7 @@ init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num
 result1=[]
 result2=[]
 result3=[]
-agent_num=5
+agent_num=6
 monte_num =1
 for i in range(monte_num):
     init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
