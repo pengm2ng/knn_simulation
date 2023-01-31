@@ -10,6 +10,8 @@ import dp_first
 import dynamic_vornoi_partition_no_re
 import sibal_knn_no_re_dist
 import frontier_based
+from matplotlib import pyplot as plt
+
 
 map_type = map.map_data1
 explored_data = map.explored_data
@@ -46,7 +48,7 @@ init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num
 result1=[]
 result2=[]
 result3=[]
-agent_num=4
+agent_num=6
 monte_num =1
 for i in range(monte_num):
     init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
@@ -55,20 +57,20 @@ for i in range(monte_num):
     ret2 = dynamic_vornoi_partition_no_re.simulate_voronoi(agent_num, map_type, explored_data, 1, 1, init_pos)
 
     if i == 0:
-        for j in range(len(ret1)-2):
+        for j in range(agent_num):
             result1.append(0)
             result2.append(0)
             result3.append(0)
 
 
 
-    for j in range(len(ret1)-2):
+    for j in range(agent_num):
         result1[j] = result1[j]+ret1[j]
         result2[j] = result2[j]+ret2[j]
         result3[j] = result3[j]+ret3[j]
 
 
-for i in range(len(ret1)-2):
+for i in range(agent_num):
     result1[i] = result1[i]/monte_num
     result2[i] = result2[i]/monte_num
     result3[i] = result3[i]/monte_num
@@ -76,20 +78,31 @@ for i in range(len(ret1)-2):
 print()
 print("*******************************************")
 print()
+print(ret1)
 print("distance")
-print("proposed 2: " + str(result1[:len(ret1)-2]))
-print("voronoi : " + str(result2[:len(ret1)-2]))
-print("proposed 1: "+ str(result3[:len(ret1)-2]))
+print("proposed 2: " + str(result1))
+print("voronoi : " + str(result2))
+print("proposed 1: "+ str(result3))
 print()
 print("total_time")
-print("proposed 2: " + str(ret1[-2:-1]))
-print("voronoi : " + str(ret2[-2:-1]))
-print("proposed 1: "+ str(ret3[-2:-1]))
+print("proposed 2: " + str(ret1[agent_num][0]))
+print("voronoi : " + str(ret2[agent_num][0]))
+print("proposed 1: "+ str(ret3[agent_num][0]))
 print()
 print("iter_mean")
-print("proposed 2: " + str(ret1[-1:]))
-print("voronoi : " + str(ret2[-1:]))
-print("proposed 1: "+ str(ret3[-1:]))
+print("proposed 2: " + str(ret1[agent_num][1]))
+print("voronoi : " + str(ret2[agent_num][1]))
+print("proposed 1: "+ str(ret3[agent_num][1]))
+print()
+print("explored rate list")
+print("proposed 2: " + str(ret1[agent_num][2]))
+print("proposed 2: " + str(ret1[agent_num][3]))
+print("voronoi : " + str(ret2[agent_num][2]))
+print("voronoi : " + str(ret2[agent_num][3]))
+print("proposed 1: "+ str(ret3[agent_num][2]))
+print("proposed 1: "+ str(ret3[agent_num][3]))
+
+
 
 #dynamic_vornoi_partition_no_re.simulate_voronoi(3, map_type, explored_data, 1, monte_num, init_pos)
 #sibal_knn_no_re_dist.simulate_sibal_knn(4, map_type, explored_data, 6, monte_num, init_pos, dpw, euw)

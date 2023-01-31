@@ -63,7 +63,14 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
         iter_cnt = 0
 
         iter_time = 0
+        total_explored_count = 0
+        for c1 in range(20):
+            for c2 in range(20):
+                if map_type[c1][c2] == 0:
+                    total_explored_count= total_explored_count + 1
         # coverage가 99%를 넘으면 flag = 0이됨 = 탐사 종료
+        explored_rate_iter = []
+        explored_rate = []
         while flag:
 
             time = 0
@@ -75,6 +82,16 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
             next_frontier_node_list = []
             iter_cnt = iter_cnt + 1
             selected_k = []  # 각 iter 마다 선택된 k
+
+            explored_count = 0
+            for c1 in range(20):
+                for c2 in range(20):
+                    if map_type[c1][c2] == 0:
+                        if changed_map[c1][c2] != 9:
+                            explored_count = explored_count + 1
+
+            explored_rate_iter.append(iter_cnt)
+            explored_rate.append(((explored_count) / total_explored_count) * 100)
 
             # 이전에 갔던 노드
             pre_frontier_node = []
@@ -390,10 +407,14 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
     #f.write("평균 time : " + str(total_time) + "\n\n")
     #f.close()
     return_value = []
+    return_nested_value = []
     for ag in range(agent_num):
         return_value.append(moving_distance_mean_mean[ag])
-    return_value.append(total_time)
-    return_value.append(iter_mean)
+    return_nested_value.append(total_time)
+    return_nested_value.append(iter_mean)
+    return_nested_value.append(explored_rate_iter)
+    return_nested_value.append(explored_rate)
+    return_value.append(return_nested_value)
     return return_value
 
 
