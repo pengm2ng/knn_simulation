@@ -48,7 +48,7 @@ init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num
 result1=[]
 result2=[]
 result3=[]
-agent_num=6
+agent_num=4
 monte_num =1
 for i in range(monte_num):
     init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
@@ -80,27 +80,12 @@ print("*******************************************")
 print()
 print(ret1)
 print("distance")
-print("proposed 2: " + str(result1))
-print("voronoi : " + str(result2))
-print("proposed 1: "+ str(result3))
+print("proposed 2: [" + str(result1)+","+str(ret1[agent_num][0])+"],")
+print("voronoi : [" + str(result2)+","+ str(ret2[agent_num][0])+"],")
+print("proposed 1 : ["+ str(result3)+","+ str(ret3[agent_num][0])+"],")
 print()
-print("total_time")
-print("proposed 2: " + str(ret1[agent_num][0]))
-print("voronoi : " + str(ret2[agent_num][0]))
-print("proposed 1: "+ str(ret3[agent_num][0]))
-print()
-print("iter_mean")
-print("proposed 2: " + str(ret1[agent_num][1]))
-print("voronoi : " + str(ret2[agent_num][1]))
-print("proposed 1: "+ str(ret3[agent_num][1]))
-print()
-print("explored rate list")
-print("proposed 2: " + str(ret1[agent_num][2]))
-print("proposed 2: " + str(ret1[agent_num][3]))
-print("voronoi : " + str(ret2[agent_num][2]))
-print("voronoi : " + str(ret2[agent_num][3]))
-print("proposed 1: "+ str(ret3[agent_num][2]))
-print("proposed 1: "+ str(ret3[agent_num][3]))
+
+
 
 
 

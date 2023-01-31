@@ -115,19 +115,23 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
             print("candidate node : " + str(candidate_node_list))
             print("dp value : " + str(dp_list))
             # removed_alredy_node = candidate_node_list
+
             if iter_cnt % 100 == 0:
                 cmap = colors.ListedColormap(['red', 'blue', 'grey', 'white', 'green', 'black'])
                 plt.figure(figsize=(6, 6))
                 plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
                 plt.axis('off')
                 plt.show()
+
             if len(candidate_node_list) == 0:
                 total_iter.append(iter_cnt - 1)
+                '''               
                 cmap = colors.ListedColormap(['red', 'blue', 'grey', 'white', 'green', 'black'])
                 plt.figure(figsize=(6, 6))
                 plt.pcolor(changed_map[::-1], cmap=cmap, edgecolors='k', linewidths=3)
                 plt.axis('off')
                 plt.show()
+                '''
                 break
 
             # k 값에 따라 다른 지도양상을 보이므로 explored_temp에 k값만큼 저장한다.
@@ -371,6 +375,7 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
     plt.xlabel('X-Axis')
     plt.ylabel('Y-Axis')
     plt.show()
+
 
     passnode_mean = []
     moving_distance_mean_mean = []

@@ -305,7 +305,7 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
                 frontier_node_list_x[ag].append(v[0])
                 frontier_node_list_y[ag].append(v[1])
 
-
+    '''
     color = ['bs-', 'rs-', 'ys-', 'ks-', 'ys', 'bs']
     print(agent_list[0].get_frontier_node())
     for ag in range(agent_num):
@@ -317,7 +317,7 @@ def simulate_voronoi(agent_num, map_type, explored_data,k,monte_num,init_positio
         plt.axis([0, 20, 0, 20])
         plt.grid(True)
     plt.show()
-
+    '''
 
 
 
