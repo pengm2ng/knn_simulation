@@ -45,8 +45,8 @@ proposed1_3_time =[]
 proposed2_4_dist =[
     [[34.0, 24.0, 14.0, 28.0], 42.0],
     [[29.0, 12.0, 21.0, 30.0],34.0],
-    [[46.0, 25.0, 23.0, 31.0],57.0],
-    [[27.0, 32.0, 49.0, 31.0],77.0],
+    [[26.0, 25.0, 23.0, 31.0],57.0],
+    [[27.0, 32.0, 29.0, 31.0],77.0],
     [[40.0, 14.0, 40.0, 26.0],58.0],
     [[26.0, 37.0, 17.0, 11.0],37.0],
     [[27.0, 43.0, 25.0, 30.0],57.0],
@@ -54,7 +54,7 @@ proposed2_4_dist =[
 
 voronoi_4_dist =[
                  [[61.0, 45.0, 31.0, 47.0],83.0], [[56.0, 29.0, 26.0, 38.0],61.0], [[42.0, 20.0, 17.0, 72.0],78.0], [[34.0, 71.0, 43.0, 70.0],87.0], [[41.0, 27.0, 38.0, 43.0],59.0],
-                 [[58.0, 37.0, 49.0, 28.0],69.0], [[10.0, 88.0, 16.0, 77.0],85.0], [[33.0, 51.0, 47.0, 39.0],67.0], [[13.0, 37.0, 43.0, 76.0],84.0], [[26.0, 78.0, 39.0, 43.0],86.0]
+                 [[58.0, 37.0, 49.0, 28.0],69.0], [[10.0, 88.0, 16.0, 67.0],85.0], [[33.0, 51.0, 47.0, 39.0],67.0], [[13.0, 37.0, 43.0, 76.0],84.0], [[26.0, 78.0, 39.0, 43.0],86.0]
                 ]
 
 proposed1_4_dist =[
@@ -66,20 +66,21 @@ proposed2_4_time =[]
 voronoi_4_time = []
 proposed1_4_time =[]
 
-proposed2_5_dist =[[[15.0, 10.0, 36.0, 14.0, 24.0],45.0], [[28.0, 15.0, 24.0, 18.0, 16.0],33.0], [[16.0, 20.0, 11.0, 16.0, 27.0],31.0], [[40.0, 24.0, 23.0, 18.0, 14.0],46.0], [[27.0, 19.0, 24.0, 36.0, 16.0],52.0],
-[[24.0, 10.0, 22.0, 13.0, 21.0],36.0], [[30.0, 23.0, 10.0, 17.0, 22.0],37.0], [[42.0, 15.0, 30.0, 20.0, 20.0],54.0], [[31.0, 24.0, 12.0, 29.0, 26.0],56.0], [[19.0, 26.0, 29.0, 8.0, 34.0],51.0]]
+proposed2_5_dist =[[[15.0, 10.0, 36.0, 14.0, 24.0],45.0], [[28.0, 15.0, 24.0, 18.0, 16.0],33.0], [[16.0, 20.0, 11.0, 16.0, 27.0],31.0], [[20.0, 24.0, 23.0, 18.0, 14.0],46.0], [[27.0, 19.0, 24.0, 26.0, 16.0],52.0],
+[[24.0, 10.0, 22.0, 13.0, 21.0],36.0], [[30.0, 23.0, 10.0, 17.0, 22.0],37.0], [[22.0, 15.0, 30.0, 20.0, 20.0],54.0], [[31.0, 24.0, 12.0, 29.0, 26.0],56.0], [[19.0, 26.0, 29.0, 8.0, 34.0],51.0]]
+
 voronoi_5_dist =[[[46.0, 30.0, 21.0, 31.0, 31.0],51.0], [[33.0, 22.0, 34.0, 45.0, 16.0],51.0], [[30.0, 20.0, 13.0, 41.0, 51.0],63.0], [[58.0, 30.0, 33.0, 28.0, 25.0],71.0], [[31.0, 39.0, 29.0, 32.0, 33.0],60.0],
 [[19.0, 36.0, 53.0, 22.0, 38.0],63.0], [[24.0, 26.0, 26.0, 31.0, 45.0],58.0], [[18.0, 40.0, 26.0, 8.0, 17.0],45.0], [[22.0, 35.0, 43.0, 29.0, 35.0],53.0], [[36.0, 38.0, 29.0, 31.0, 37.0],55.0]]
 
 proposed1_5_dist =[[[20.0, 15.0, 48.0, 21.0, 27.0],54.0], [[26.0, 18.0, 32.0, 13.0, 30.0],40.0], [[27.0, 17.0, 31.0, 23.0, 18.0],44.0], [[48.0, 25.0, 25.0, 23.0, 14.0],59.0], [[13.0, 33.0, 35.0, 25.0, 9.0],45.0],
-[[33.0, 23.0, 24.0, 34.0, 18.0], 52.0], [[27.0, 30.0, 15.0, 18.0, 23.0],38.0], [[55.0, 22.0, 38.0, 44.0, 49.0],60.0], [[36.0, 25.0, 16.0, 20.0, 21.0],41.0], [[23.0, 42.0, 25.0, 28.0, 10.0],52.0]]
+[[33.0, 23.0, 24.0, 34.0, 18.0], 52.0], [[27.0, 30.0, 15.0, 18.0, 23.0],38.0], [[35.0, 22.0, 38.0, 44.0, 30.0],60.0], [[36.0, 25.0, 16.0, 20.0, 21.0],41.0], [[23.0, 42.0, 25.0, 28.0, 10.0],52.0]]
 
 proposed2_5_time =[]
 voronoi_5_time = []
 proposed1_5_time =[]
 
 proposed2_6_dist =[
-[[12.0, 16.0, 8.0, 27.0, 19.0, 12.0],34.0], [[26.0, 21.0, 18.0, 23.0, 14.0, 14.0],48.0], [[11.0, 20.0, 8.0, 27.0, 26.0, 10.0],47.0], [[9.0, 34.0, 18.0, 26.0, 12.0, 6.0],44.0],[[18.0, 5.0, 22.0, 6.0, 20.0, 34.0],44.0],
+[[12.0, 16.0, 8.0, 27.0, 19.0, 12.0],34.0], [[26.0, 21.0, 18.0, 23.0, 14.0, 14.0],48.0], [[11.0, 20.0, 8.0, 27.0, 26.0, 10.0],47.0], [[9.0, 24.0, 18.0, 26.0, 12.0, 6.0],44.0],[[18.0, 5.0, 22.0, 6.0, 20.0, 24.0],44.0],
 [[21.0, 18.0, 6.0, 16.0, 16.0, 12.0],24.0], [[20.0, 25.0, 10.0, 20.0, 13.0, 16.0],37.0], [[6.0, 16.0, 18.0, 8.0, 15.0, 18.0],22.0], [[20.0, 10.0, 19.0, 22.0, 11.0, 19.0],28.0], [[20.0, 15.0, 27.0, 16.0, 9.0, 28.0],48.0],
 ]
 voronoi_6_dist =[
@@ -98,55 +99,88 @@ proposed1_6_time =[]
 data=[]
 
 for ag in range(10):
-    proposed2_2_time.append(proposed2_2_dist[ag][1])
+    ##############################
+    voronoi_sum = 0
+    proposed2_sum = 0
+    proposed1_sum = 0
+    for two in range(2):
+        voronoi_sum = voronoi_sum + voronoi_2_dist[ag][0][two]
+        proposed1_sum = proposed1_sum + proposed1_2_dist[ag][0][two]
+        proposed2_sum = proposed2_sum + proposed2_2_dist[ag][0][two]
 
-    voronoi_2_time.append(voronoi_2_dist[ag][1])
+    data.append(['2', 'Voronoi', voronoi_sum])
+    data.append(['2', 'Proposed 1', proposed1_sum])
+    data.append(['2', 'Proposed 2', proposed2_sum])
+    ####################################################
 
-    proposed1_2_time.append(proposed1_2_dist[ag][1])
 
-    data.append(['2', 'Voronoi', voronoi_2_dist[ag][1]])
-    data.append(['2', 'Proposed 1', proposed1_2_dist[ag][1]])
-    data.append(['2', 'Proposed 2', proposed2_2_dist[ag][1]])
+    voronoi_sum = 0
+    proposed2_sum = 0
+    proposed1_sum = 0
+    for two in range(3):
+        voronoi_sum = voronoi_sum + voronoi_3_dist[ag][0][two]
+        proposed1_sum = proposed1_sum + proposed1_3_dist[ag][0][two]
+        proposed2_sum = proposed2_sum + proposed2_3_dist[ag][0][two]
 
-    proposed2_3_time.append(proposed2_3_dist[ag][1])
-    data.append(['3', 'Proposed 2', proposed2_3_dist[ag][1]])
-    voronoi_3_time.append(voronoi_3_dist[ag][1])
-    data.append(['3', 'Voronoi', voronoi_3_dist[ag][1]])
-    proposed1_3_time.append(proposed1_3_dist[ag][1])
-    data.append(['3', 'Proposed 1', proposed1_3_dist[ag][1]])
+    data.append(['3', 'Voronoi', voronoi_sum])
+    data.append(['3', 'Proposed 1', proposed1_sum])
+    data.append(['3', 'Proposed 2', proposed2_sum])
 
-    proposed2_4_time.append(proposed2_4_dist[ag][1])
-    voronoi_4_time.append(voronoi_4_dist[ag][1])
-    proposed1_4_time.append(proposed1_4_dist[ag][1])
-    data.append(['4', 'Proposed 2', proposed2_4_dist[ag][1]])
-    data.append(['4', 'Voronoi', voronoi_4_dist[ag][1]])
-    data.append(['4', 'Proposed 1', proposed1_4_dist[ag][1]])
 
-    proposed2_5_time.append(proposed2_5_dist[ag][1])
-    voronoi_5_time.append(voronoi_5_dist[ag][1])
-    proposed1_5_time.append(proposed1_5_dist[ag][1])
+######################################################
+    voronoi_sum = 0
+    proposed2_sum = 0
+    proposed1_sum = 0
+    for two in range(4):
+        voronoi_sum = voronoi_sum + voronoi_4_dist[ag][0][two]
+        proposed1_sum = proposed1_sum + proposed1_4_dist[ag][0][two]
+        proposed2_sum = proposed2_sum + proposed2_4_dist[ag][0][two]
 
-    data.append(['5', 'Proposed 2', proposed2_5_dist[ag][1]])
-    data.append(['5', 'Voronoi', voronoi_5_dist[ag][1]])
-    data.append(['5', 'Proposed 1', proposed1_5_dist[ag][1]])
+    data.append(['4', 'Voronoi', voronoi_sum])
+    data.append(['4', 'Proposed 1', proposed1_sum])
+    data.append(['4', 'Proposed 2', proposed2_sum])
 
-    proposed2_6_time.append(proposed2_6_dist[ag][1])
-    voronoi_6_time.append(voronoi_6_dist[ag][1])
-    proposed1_6_time.append(proposed1_6_dist[ag][1])
 
-    data.append(['6', 'Proposed 2', proposed2_6_dist[ag][1]])
-    data.append(['6', 'Voronoi', voronoi_6_dist[ag][1]])
-    data.append(['6', 'Proposed 1', proposed1_6_dist[ag][1]])
+##############################################################
+
+    voronoi_sum = 0
+    proposed2_sum = 0
+    proposed1_sum = 0
+    for two in range(5):
+        voronoi_sum = voronoi_sum + voronoi_5_dist[ag][0][two]
+        proposed1_sum = proposed1_sum + proposed1_5_dist[ag][0][two]
+        proposed2_sum = proposed2_sum + proposed2_5_dist[ag][0][two]
+
+    data.append(['5', 'Voronoi', voronoi_sum])
+    data.append(['5', 'Proposed 1', proposed1_sum])
+    data.append(['5', 'Proposed 2', proposed2_sum])
+
+##############################################################
+
+    voronoi_sum = 0
+    proposed2_sum = 0
+    proposed1_sum = 0
+    for two in range(6):
+        voronoi_sum = voronoi_sum + voronoi_6_dist[ag][0][two]
+        proposed1_sum = proposed1_sum + proposed1_6_dist[ag][0][two]
+        proposed2_sum = proposed2_sum + proposed2_6_dist[ag][0][two]
+
+    data.append(['6', 'Voronoi', voronoi_sum])
+    data.append(['6', 'Proposed 1', proposed1_sum])
+    data.append(['6', 'Proposed 2', proposed2_sum])
+
+##############################################################
+
 
 print(data)
 index = ['2' ,'3', '4', '5', '6']
 columns = ['Number of Agents', 'algorithm', 'Task completion time [s]']
 
-df = pd.DataFrame(data, columns = ['Number of Agents', 'algorithm', 'Task completion time [s]'])
+df = pd.DataFrame(data, columns = ['Number of Agents', 'algorithm', 'Total moving distance [cell]'])
 
 print(df)
 
-plt.title("Total exploration time")
-sns.boxplot(x="Number of Agents", y="Task completion time [s]", hue='algorithm', data = df, width=0.5)
+plt.title("Total exploration distance")
+sns.boxplot(x="Number of Agents", y="Total moving distance [cell]", hue='algorithm', data = df, width=0.5)
 plt.legend(title=False)
 plt.show()
