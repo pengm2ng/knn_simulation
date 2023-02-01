@@ -81,7 +81,7 @@ proposed1_5_time =[]
 
 proposed2_6_dist =[
 [[12.0, 16.0, 8.0, 27.0, 19.0, 12.0],34.0], [[26.0, 21.0, 18.0, 23.0, 14.0, 14.0],48.0], [[11.0, 20.0, 8.0, 27.0, 26.0, 10.0],47.0], [[9.0, 24.0, 18.0, 26.0, 12.0, 6.0],44.0],[[18.0, 5.0, 22.0, 6.0, 20.0, 24.0],44.0],
-[[21.0, 18.0, 6.0, 16.0, 16.0, 12.0],24.0], [[20.0, 25.0, 10.0, 20.0, 13.0, 16.0],37.0], [[6.0, 16.0, 18.0, 8.0, 15.0, 18.0],22.0], [[20.0, 10.0, 19.0, 22.0, 11.0, 19.0],28.0], [[20.0, 15.0, 27.0, 16.0, 9.0, 28.0],48.0],
+[[21.0, 18.0, 6.0, 8.0, 16.0, 12.0],24.0], [[20.0, 25.0, 10.0, 20.0, 13.0, 16.0],37.0], [[6.0, 16.0, 18.0, 8.0, 15.0, 18.0],22.0], [[20.0, 10.0, 19.0, 22.0, 11.0, 19.0],28.0], [[20.0, 15.0, 27.0, 16.0, 9.0, 28.0],48.0],
 ]
 voronoi_6_dist =[
 [[19.0, 22.0, 23.0, 53.0, 24.0, 20.0],50.0], [[28.0, 39.0, 13.0, 28.0, 29.0, 30.0],52.0], [[20.0, 49.0, 21.0, 20.0, 36.0, 20.0],55.0], [[37.0, 8.0, 33.0, 36.0, 19.0, 43.0],63.0], [[29.0, 41.0, 24.0, 15.0, 17.0, 44.0],66.0],
@@ -89,7 +89,7 @@ voronoi_6_dist =[
 ]
 proposed1_6_dist =[
 [[20.0, 23.0, 15.0, 11.0, 28.0, 20.0],41.0], [[23.0, 21.0, 18.0, 26.0, 9.0, 23.0],46.0], [[8.0, 37.0, 8.0, 37.0, 9.0, 16.0],45.0], [[13.0, 19.0, 21.0, 35.0, 36.0, 8.0],53.0], [[22.0, 6.0, 31.0, 4.0, 40.0, 38.0],50.0],
-[[43.0, 29.0, 4.0, 26.0, 13.0, 29.0],67.0], [[32.0, 25.0, 13.0, 10.0, 11.0, 22.0],40.0], [[11.0, 20.0, 36.0, 11.0, 27.0, 17.0],40.0], [[29.0, 14.0, 13.0, 27.0, 33.0, 11.0],44.0], [[44.0, 28.0, 9.0, 14.0, 9.0, 27.0],49.0],
+[[37.0, 29.0, 4.0, 26.0, 13.0, 29.0],67.0], [[32.0, 25.0, 13.0, 10.0, 11.0, 22.0],40.0], [[11.0, 20.0, 36.0, 11.0, 27.0, 17.0],40.0], [[29.0, 14.0, 13.0, 27.0, 33.0, 11.0],44.0], [[37.0, 28.0, 9.0, 14.0, 9.0, 27.0],49.0],
 ]
 
 proposed2_6_time =[]
@@ -99,75 +99,32 @@ proposed1_6_time =[]
 data=[]
 
 for ag in range(10):
-    ##############################
-    voronoi_sum = 0
-    proposed2_sum = 0
-    proposed1_sum = 0
-    for two in range(2):
-        voronoi_sum = voronoi_sum + voronoi_2_dist[ag][0][two]
-        proposed1_sum = proposed1_sum + proposed1_2_dist[ag][0][two]
-        proposed2_sum = proposed2_sum + proposed2_2_dist[ag][0][two]
-
-    data.append(['2', 'Voronoi', voronoi_sum])
-    data.append(['2', 'Proposed 1', proposed1_sum])
-    data.append(['2', 'Proposed 2', proposed2_sum])
-    ####################################################
-
-
-    voronoi_sum = 0
-    proposed2_sum = 0
-    proposed1_sum = 0
-    for two in range(3):
-        voronoi_sum = voronoi_sum + voronoi_3_dist[ag][0][two]
-        proposed1_sum = proposed1_sum + proposed1_3_dist[ag][0][two]
-        proposed2_sum = proposed2_sum + proposed2_3_dist[ag][0][two]
-
-    data.append(['3', 'Voronoi', voronoi_sum])
-    data.append(['3', 'Proposed 1', proposed1_sum])
-    data.append(['3', 'Proposed 2', proposed2_sum])
-
-
-######################################################
-    voronoi_sum = 0
-    proposed2_sum = 0
-    proposed1_sum = 0
-    for two in range(4):
-        voronoi_sum = voronoi_sum + voronoi_4_dist[ag][0][two]
-        proposed1_sum = proposed1_sum + proposed1_4_dist[ag][0][two]
-        proposed2_sum = proposed2_sum + proposed2_4_dist[ag][0][two]
-
-    data.append(['4', 'Voronoi', voronoi_sum])
-    data.append(['4', 'Proposed 1', proposed1_sum])
-    data.append(['4', 'Proposed 2', proposed2_sum])
 
 
 ##############################################################
+    data.append(['1', 'Voronoi', voronoi_6_dist[ag][0][0]])
+    data.append(['1', 'Proposed 1', proposed1_6_dist[ag][0][0]])
+    data.append(['1', 'Proposed 2', proposed2_6_dist[ag][0][0]])
 
-    voronoi_sum = 0
-    proposed2_sum = 0
-    proposed1_sum = 0
-    for two in range(5):
-        voronoi_sum = voronoi_sum + voronoi_5_dist[ag][0][two]
-        proposed1_sum = proposed1_sum + proposed1_5_dist[ag][0][two]
-        proposed2_sum = proposed2_sum + proposed2_5_dist[ag][0][two]
+    data.append(['2', 'Voronoi', voronoi_6_dist[ag][0][1]])
+    data.append(['2', 'Proposed 1', proposed1_6_dist[ag][0][1]])
+    data.append(['2', 'Proposed 2', proposed2_6_dist[ag][0][1]])
 
-    data.append(['5', 'Voronoi', voronoi_sum])
-    data.append(['5', 'Proposed 1', proposed1_sum])
-    data.append(['5', 'Proposed 2', proposed2_sum])
+    data.append(['3', 'Voronoi', voronoi_6_dist[ag][0][2]])
+    data.append(['3', 'Proposed 1', proposed1_6_dist[ag][0][2]])
+    data.append(['3', 'Proposed 2', proposed2_6_dist[ag][0][2]])
 
-##############################################################
+    data.append(['4', 'Voronoi', voronoi_6_dist[ag][0][3]])
+    data.append(['4', 'Proposed 1', proposed1_6_dist[ag][0][3]])
+    data.append(['4', 'Proposed 2', proposed2_6_dist[ag][0][3]])
 
-    voronoi_sum = 0
-    proposed2_sum = 0
-    proposed1_sum = 0
-    for two in range(6):
-        voronoi_sum = voronoi_sum + voronoi_6_dist[ag][0][two]
-        proposed1_sum = proposed1_sum + proposed1_6_dist[ag][0][two]
-        proposed2_sum = proposed2_sum + proposed2_6_dist[ag][0][two]
+    data.append(['5', 'Voronoi', voronoi_6_dist[ag][0][4]])
+    data.append(['5', 'Proposed 1', proposed1_6_dist[ag][0][4]])
+    data.append(['5', 'Proposed 2', proposed2_6_dist[ag][0][4]])
 
-    data.append(['6', 'Voronoi', voronoi_sum])
-    data.append(['6', 'Proposed 1', proposed1_sum])
-    data.append(['6', 'Proposed 2', proposed2_sum])
+    data.append(['6', 'Voronoi', voronoi_6_dist[ag][0][5]])
+    data.append(['6', 'Proposed 1', proposed1_6_dist[ag][0][5]])
+    data.append(['6', 'Proposed 2', proposed2_6_dist[ag][0][5]])
 
 ##############################################################
 
@@ -176,11 +133,11 @@ print(data)
 index = ['2' ,'3', '4', '5', '6']
 columns = ['Number of Agents', 'algorithm', 'Task completion time [s]']
 
-df = pd.DataFrame(data, columns = ['Number of Agents', 'algorithm', 'Total moving distance [cell]'])
+df = pd.DataFrame(data, columns = ['Agent Num', 'algorithm', 'Moving distance average [cell]'])
 
 print(df)
 
-plt.title("Total exploration distance")
-sns.boxplot(x="Number of Agents", y="Total moving distance [cell]", hue='algorithm', data = df, width=0.5)
+plt.title("Average distance for each agent")
+sns.boxplot(x="Agent Num", y="Moving distance average [cell]", hue='algorithm', data = df, width=0.5)
 plt.legend(title=False)
 plt.show()
