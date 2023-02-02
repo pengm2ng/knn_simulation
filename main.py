@@ -1,15 +1,11 @@
-import advanced_knn
-import kimst_knn
-import sibal_knn
-import sibal_knn_no_dp
+
 import sibal_knn_no_re
-import sibural_knn
-import advance_knn_real
+
 from resources import map, init_pos, init_pos_generator
-import dp_first
+
 import dynamic_vornoi_partition_no_re
 import sibal_knn_no_re_dist
-import frontier_based
+
 from matplotlib import pyplot as plt
 
 
@@ -48,10 +44,11 @@ init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num
 result1=[]
 result2=[]
 result3=[]
-agent_num=6
+agent_num=4
 monte_num =1
 for i in range(monte_num):
-    init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
+    #init_pos = init_pos_generator.init_pos_generate(map_type,explored_data,agent_num,1)
+    init_pos = [[[2,14],[16,10],[4,6],[12,11]]]
     ret1 = sibal_knn_no_re_dist.simulate_sibal_knn(agent_num, map_type, explored_data, 6, 1, init_pos, 0.1, 0.9)
     ret3 = sibal_knn_no_re.simulate_sibal_knn(agent_num, map_type, explored_data, 6, 1, init_pos)
     ret2 = dynamic_vornoi_partition_no_re.simulate_voronoi(agent_num, map_type, explored_data, 1, 1, init_pos)

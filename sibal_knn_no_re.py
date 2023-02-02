@@ -369,9 +369,8 @@ def simulate_sibal_knn(agent_num, map_type, explored_data, k, monte_num,init_pos
         plt.xticks(range(21))
         plt.yticks(range(21))
     for ag in range(agent_num):
-        plt.plot(init_position[0][ag][0], init_position[0][ag][1], 'rs', markersize=9)
-
-    plt.legend(loc='upper right')
+        plt.plot(init_position[0][ag][0], init_position[0][ag][1], color[ag], markersize=9)
+    plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.1))
     plt.xlabel('X-Axis')
     plt.ylabel('Y-Axis')
     plt.show()
